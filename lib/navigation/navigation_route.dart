@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sample/page/bloc/bloc_page.dart';
 import 'package:flutter_sample/page/cubit/cubit_page.dart';
+import 'package:flutter_sample/page/network/network_page.dart';
 import 'package:flutter_sample/page/not_found_navigation_widget.dart';
 import 'package:flutter_sample/page/provider/provider_page.dart';
 import 'package:flutter_sample/page/set_state_page.dart';
@@ -20,10 +21,12 @@ class NavigationRoute {
         return normalNavigate(SetStatePage());
       case NavigationConstants.PROVIDER:
         return normalNavigate(ProviderPage());
-      case NavigationConstants.CUBIT:
-        return normalNavigate(CubitPage());
       case NavigationConstants.BLOC:
         return normalNavigate(BlocPage());
+      case NavigationConstants.CUBIT:
+        return normalNavigate(CubitPage());
+      case NavigationConstants.NETWORK:
+        return normalNavigate(NetworkPage());
 
       default:
         return MaterialPageRoute(

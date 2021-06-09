@@ -45,11 +45,13 @@ class _SetStatePageState extends State<SetStatePage> {
               FloatingActionButton(
                 onPressed: _incrementCount,
                 child: Icon(Icons.add),
+                heroTag: 'add'
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
                 onPressed: _decrementCount,
                 child: Icon(Icons.remove),
+                heroTag: 'minus'
               ),
             ],
           ),

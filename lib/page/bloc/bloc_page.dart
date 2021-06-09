@@ -55,11 +55,13 @@ class _BlocPageView extends StatelessWidget {
             FloatingActionButton(
               onPressed: () => context.read<CounterBloc>().add(IncrementEvent()),
               child: Icon(Icons.add),
+              heroTag: 'add'
             ),
             const SizedBox(height: 10),
             FloatingActionButton(
               onPressed: () => context.read<CounterBloc>().add(DecrementEvent()),
               child: Icon(Icons.remove),
+              heroTag: 'minus'
             ),
           ],
         ),

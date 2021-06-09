@@ -29,6 +29,11 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.CUBIT); },
             child: const Text('Cubit'),
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.NETWORK); },
+            child: const Text('NetWork'),
           )
         ],
       ),

@@ -44,11 +44,13 @@ class _ProviderPageView extends StatelessWidget {
               FloatingActionButton(
                 onPressed: () => Provider.of<CounterProvider>(context, listen: false).incrementCount(),
                 child: Icon(Icons.add),
+                heroTag: 'add'
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
                 onPressed: () => Provider.of<CounterProvider>(context, listen: false).decrementCount(),
                 child: Icon(Icons.remove),
+                heroTag: 'minus'
               ),
             ],
         ),
