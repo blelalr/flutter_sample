@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/page/bloc/counter_bloc.dart';
+import 'package:flutter_sample/page/state_management/bloc/counter_bloc.dart';
 
 class BlocPage extends StatefulWidget {
   const BlocPage({Key? key}) : super(key: key);

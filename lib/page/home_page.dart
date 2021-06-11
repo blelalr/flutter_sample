@@ -12,23 +12,8 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           ElevatedButton(
-            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.SET_STATE); },
-            child: const Text('Set State'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.PROVIDER); },
-            child: const Text('Provider'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.BLOC); },
-            child: const Text('Bloc'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.CUBIT); },
-            child: const Text('Cubit'),
+            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.STATE_MANAGEMENT); },
+            child: const Text('State Management'),
           ),
           const SizedBox(height: 30),
           ElevatedButton(

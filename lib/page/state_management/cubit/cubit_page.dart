@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/page/cubit/counter_cubit.dart';
+import 'package:flutter_sample/page/state_management/cubit/counter_cubit.dart';
 
 class CubitPage extends StatefulWidget {
   const CubitPage({Key? key}) : super(key: key);

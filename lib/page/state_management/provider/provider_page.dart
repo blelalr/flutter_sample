@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/page/provider/counter_provider.dart';
+import 'package:flutter_sample/page/state_management/provider/counter_provider.dart';
 import 'package:provider/provider.dart';
 class ProviderPage extends StatefulWidget {
   const ProviderPage({Key? key}) : super(key: key);
@@ -18,10 +18,9 @@ class _ProviderPageState extends State<ProviderPage> {
 
 class _ProviderPageView extends StatelessWidget {
   const _ProviderPageView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    // var _count = Provider.of<Counter>(context).getCounter;
+    var _count = Provider.of<CounterProvider>(context).getCounter;
     return  Scaffold(
         appBar: AppBar(
           title: Text('Provider'),

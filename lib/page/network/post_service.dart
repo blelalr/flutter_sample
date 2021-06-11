@@ -2,7 +2,7 @@ import 'package:flutter_sample/api/api_manager.dart';
 import 'package:flutter_sample/api/api_path.dart';
 import 'package:flutter_sample/page/network/post.dart';
 
-class PostApi {
+class PostService {
   static Future<List<Post>> getPosts(String startIndex) async {
     var _postLimit = 20;
     var response = await ApiManager().get(path: Api.GET_POSTS,
