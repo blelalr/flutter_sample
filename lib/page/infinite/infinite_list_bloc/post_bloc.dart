@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_sample/page/network/post_service.dart';
-import 'package:flutter_sample/page/network/post.dart';
+import 'package:flutter_sample/page/infinite/post_service.dart';
+import 'package:flutter_sample/page/infinite/post.dart';
 import 'package:meta/meta.dart';
 
 part 'post_event.dart';
@@ -23,14 +23,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     if (state.hasReachedMax) return state;
     try {
       if (state.status == PostStatus.initial) {
-        final posts = await PostService.getPosts('0');
+        final posts = await PostService.getPosts(0);
         return state.copyWith(
           status: PostStatus.success,
           posts: posts,
           hasReachedMax: false,
         );
       }
-      final posts = await PostService.getPosts('${state.posts.length}');
+      final posts = await PostService.getPosts(state.posts.length);
       return posts.isEmpty
           ? state.copyWith(hasReachedMax: true)
           : state.copyWith(

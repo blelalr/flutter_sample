@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_sample/page/network/network_page.dart';
+import 'package:flutter_sample/page/infinite/infinite_list_bloc/infinite_list_bloc_page.dart';
+import 'package:flutter_sample/page/infinite/infinite_list_cubit/infinite_list_cubit_page.dart';
+import 'package:flutter_sample/page/infinite/infinite_page.dart';
 import 'package:flutter_sample/page/not_found_navigation_widget.dart';
 import 'package:flutter_sample/page/state_management/bloc/bloc_page.dart';
 import 'package:flutter_sample/page/state_management/cubit/cubit_page.dart';
@@ -18,6 +20,8 @@ class NavigationRoute {
 
   Route<dynamic> generateRoute(RouteSettings args) {
     switch (args.name) {
+      case NavigationConstants.STATE_MANAGEMENT:
+        return normalNavigate(StateManagementPage());
       case NavigationConstants.SET_STATE:
         return normalNavigate(SetStatePage());
       case NavigationConstants.PROVIDER:
@@ -26,10 +30,12 @@ class NavigationRoute {
         return normalNavigate(BlocPage());
       case NavigationConstants.CUBIT:
         return normalNavigate(CubitPage());
-      case NavigationConstants.NETWORK:
-        return normalNavigate(NetworkPage());
-      case NavigationConstants.STATE_MANAGEMENT:
-        return normalNavigate(StateManagementPage());
+      case NavigationConstants.INFINITE:
+        return normalNavigate(InfinitePage());
+      case NavigationConstants.INFINITE_BLOC:
+        return normalNavigate(InfiniteListBlocPage());
+      case NavigationConstants.INFINITE_CUBIT:
+        return normalNavigate(InfiniteListCubitPage());
       default:
         return MaterialPageRoute(
           builder: (context) => NotFoundNavigationWidget(),
