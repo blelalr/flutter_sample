@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_sample/api/api_path.dart';
-import 'package:flutter_sample/page/infinite/post.dart';
 
 enum DioMethod {
   get,

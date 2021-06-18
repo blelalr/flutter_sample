@@ -9,6 +9,10 @@ import 'package:flutter_sample/page/state_management/cubit/cubit_page.dart';
 import 'package:flutter_sample/page/state_management/provider/provider_page.dart';
 import 'package:flutter_sample/page/state_management/set_state_page.dart';
 import 'package:flutter_sample/page/state_management/state_management_page.dart';
+import 'package:flutter_sample/page/test_sample/scale_page_view.dart';
+import 'package:flutter_sample/page/test_sample/test_sample_page.dart';
+import 'package:flutter_sample/page/test_sample/carousel_view.dart';
+import 'package:flutter_sample/page/video_scroll/video_scroll_page.dart';
 
 import '../../navigation/navigation_constants.dart';
 
@@ -36,6 +40,11 @@ class NavigationRoute {
         return normalNavigate(InfiniteListBlocPage());
       case NavigationConstants.INFINITE_CUBIT:
         return normalNavigate(InfiniteListCubitPage());
+      case NavigationConstants.VIDEO_SCROLL:
+        return normalNavigate(VideoScrollPage());
+      case NavigationConstants.TEST_SAMPLE:
+        // return normalNavigate(ScalePageView());
+        return normalNavigate(CarouselView());
       default:
         return MaterialPageRoute(
           builder: (context) => NotFoundNavigationWidget(),

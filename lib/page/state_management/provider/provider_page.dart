@@ -20,7 +20,7 @@ class _ProviderPageView extends StatelessWidget {
   const _ProviderPageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var _count = Provider.of<CounterProvider>(context).getCounter;
+    // var _count = Provider.of<CounterProvider>(context).getCounter;
     return  Scaffold(
         appBar: AppBar(
           title: Text('Provider'),

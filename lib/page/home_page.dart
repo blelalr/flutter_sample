@@ -19,6 +19,16 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.INFINITE); },
             child: const Text('Bloc/Cubit Infinite List'),
+          ),
+          // const SizedBox(height: 30),
+          // ElevatedButton(
+          //   onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.VIDEO_SCROLL); },
+          //   child: const Text('Video Scroll'),
+          // ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.TEST_SAMPLE); },
+            child: const Text('Test Sample'),
           )
         ],
       ),

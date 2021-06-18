@@ -15,6 +15,4 @@ class PostSuccess extends PostState {
       {required this.posts, required this.isReachMax});
 }
 
-class PostLoadFailed extends PostState {
-  PostLoadFailed();
-}
+class PostLoadFailed extends PostState {}

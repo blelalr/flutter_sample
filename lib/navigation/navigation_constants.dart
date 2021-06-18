@@ -6,6 +6,10 @@ class NavigationConstants {
   static const BLOC = '/stateManagement/bloc';
 
   static const INFINITE = '/infinite';
-  static const INFINITE_BLOC = '/infinite/infinite_bloc';
-  static const INFINITE_CUBIT='/infinite/infinite_cubit';
+  static const INFINITE_BLOC = '/infinite/infiniteBloc';
+  static const INFINITE_CUBIT='/infinite/infiniteCubit';
+
+  static const TEST_SAMPLE='/testSample';
+
+  static const VIDEO_SCROLL='/videoScroll';
 }
