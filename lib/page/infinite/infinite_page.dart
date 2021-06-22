@@ -10,7 +10,7 @@ class InfinitePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('State Management'),
+          title: Text('Infinite List'),
         ),
         body: Container(
             child: Center(

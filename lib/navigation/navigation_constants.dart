@@ -12,4 +12,6 @@ class NavigationConstants {
   static const TEST_SAMPLE='/testSample';
 
   static const VIDEO_SCROLL='/videoScroll';
+
+  static const DIALOG_SAMPLE='/dialogSample';
 }

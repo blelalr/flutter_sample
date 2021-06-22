@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_sample/page/dialog_sample/dialog_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_bloc/infinite_list_bloc_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_cubit/infinite_list_cubit_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_page.dart';
@@ -40,11 +41,13 @@ class NavigationRoute {
         return normalNavigate(InfiniteListBlocPage());
       case NavigationConstants.INFINITE_CUBIT:
         return normalNavigate(InfiniteListCubitPage());
-      case NavigationConstants.VIDEO_SCROLL:
-        return normalNavigate(VideoScrollPage());
+      // case NavigationConstants.VIDEO_SCROLL:
+      //   return normalNavigate(VideoScrollPage());
       case NavigationConstants.TEST_SAMPLE:
         // return normalNavigate(ScalePageView());
         return normalNavigate(CarouselView());
+      case NavigationConstants.DIALOG_SAMPLE:
+        return normalNavigate(DialogPage());
       default:
         return MaterialPageRoute(
           builder: (context) => NotFoundNavigationWidget(),
