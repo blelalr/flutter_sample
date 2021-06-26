@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/navigation/navigation_route.dart';
 import 'package:flutter_sample/navigation/navigation_service.dart';
-import 'package:flutter_sample/page/dialog_sample/dialog_cubit.dart';
+import 'package:flutter_sample/bloc/dialog/dialog_cubit.dart';
 import 'package:flutter_sample/page/home_page.dart';
+import 'package:flutter_sample/style/app_themes.dart';
+import 'bloc/theme/theme_cubit.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,17 +16,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => DialogCubit(),
-        child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
-        onGenerateRoute: NavigationRoute.instance.generateRoute,
-        navigatorKey: NavigationService.instance.navigatorKey,
-    ));
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => DialogCubit(),
+          ),
+          BlocProvider(
+            create: (context) => ThemeCubit(),
+          ),
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              themeMode: context.read<ThemeCubit>().state.themeMode,
+              theme: AppThemes.lightTheme,
+              darkTheme: AppThemes.darkTheme,
+              home: MyHomePage(title: 'Flutter Demo'),
+              onGenerateRoute: NavigationRoute.instance.generateRoute,
+              navigatorKey: NavigationService.instance.navigatorKey,
+            );
+          },
+        ));
   }
 }
 
@@ -35,15 +48,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
           title: Text(title),
         ),
-        body: HomePage()
-    );
+        body: HomePage());
   }
 }
-

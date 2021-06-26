@@ -1,4 +1,4 @@
-part of 'dialog_cubit.dart';
+part of '../../bloc/dialog/dialog_cubit.dart';
 
 @immutable
 abstract class DialogState {}

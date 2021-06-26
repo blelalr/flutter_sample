@@ -1,5 +1,5 @@
 class NavigationConstants {
-  static const STATE_MANAGEMENT ='/stateManagement';
+  static const STATE_MANAGEMENT = '/stateManagement';
   static const SET_STATE = '/stateManagement/setState';
   static const PROVIDER = '/stateManagement/provider';
   static const CUBIT = '/stateManagement/cubit';
@@ -7,11 +7,13 @@ class NavigationConstants {
 
   static const INFINITE = '/infinite';
   static const INFINITE_BLOC = '/infinite/infiniteBloc';
-  static const INFINITE_CUBIT='/infinite/infiniteCubit';
+  static const INFINITE_CUBIT = '/infinite/infiniteCubit';
 
-  static const TEST_SAMPLE='/testSample';
+  static const TEST_SAMPLE = '/testSample';
 
-  static const VIDEO_SCROLL='/videoScroll';
+  static const VIDEO_SCROLL = '/videoScroll';
 
-  static const DIALOG_SAMPLE='/dialogSample';
+  static const DIALOG_SAMPLE = '/dialogSample';
+
+  static const THEME_SAMPLE = '/themeSample';
 }
