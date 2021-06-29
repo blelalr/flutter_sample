@@ -5,9 +5,9 @@ import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 
 class ButtonSmall extends StatelessWidget {
-  final double? width;
   final String text;
   final VoidCallback press;
+  final double? width;
   final Color? backgroundColor;
   final Color? textColor;
 
