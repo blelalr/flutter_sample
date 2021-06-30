@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/page/test_sample/button/button_smaill_outlined.dart';
 import 'package:flutter_sample/page/test_sample/button/button_small.dart';
 import 'package:flutter_sample/page/theme_sample/theme_switch_widget.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeSample extends StatelessWidget {
   const ThemeSample({Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class ThemeSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconColor = Theme.of(context).iconTheme.color;
+    final primaryColor = Theme.of(context).primaryColor;
+    final themeBloc = context.watch<ThemeCubit>();
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -39,17 +44,110 @@ class ThemeSample extends StatelessWidget {
             ),
           ],
         ),
-        body: SingleChildScrollView(
+        body: CustomScrollView(
           physics: BouncingScrollPhysics(),
-          child: Column(children: [
-            UpgradeCard(),
-            UserProfileCard(),
-            ProfileButtonStack(),
-            Container(
-              height: 100,
-              color: Theme.of(context).primaryColor,
-            )
-          ]),
+          slivers: [
+            SliverToBoxAdapter(
+                child: Column(
+              children: [
+                UpgradeCard(),
+                UserProfileCard(),
+                ProfileButtonStack(),
+              ],
+            )),
+            SliverToBoxAdapter(
+              child: Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 12,
+                    color: primaryColor,
+                  ),
+                  Positioned(
+                    right: 16,
+                    child: SvgPicture.asset(
+                      'assets/icon/popupArrow.svg',
+                      width: 32,
+                      height: 14,
+                      color: themeBloc.isDarkMode
+                          ? AppColors.backgroundDarkB1
+                          : AppColors.backgroundLightB1,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+                child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                color: themeBloc.isDarkMode
+                    ? AppColors.backgroundDarkB1
+                    : AppColors.backgroundLightB1,
+                child: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                          width: 150,
+                          child: Card(
+                            child: Container(
+                              color: Theme.of(context).hintColor,
+                            ),
+                          )),
+                      Container(
+                          width: 150,
+                          height: 150, //change height All element change
+                          child: Card(
+                            child: Container(
+                              color: Theme.of(context).hintColor,
+                            ),
+                          )),
+                      Container(
+                          width: 150,
+                          child: Card(
+                            child: Container(
+                              color: Theme.of(context).hintColor,
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            )),
+            SliverToBoxAdapter(
+              child: Container(
+                height: 200.0,
+                color: themeBloc.isDarkMode
+                    ? AppColors.backgroundDarkB1
+                    : AppColors.backgroundLightB1,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                        width: 150.0,
+                        height: 90,
+                        child: Card(
+                          child: Container(
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ));
+                  },
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  Container(height: 200, color: Colors.green),
+                  Container(height: 200, color: Colors.pink),
+                  Container(height: 200, color: Colors.green),
+                  Container(height: 200, color: Colors.pink),
+                ],
+              ),
+            ),
+          ],
         ));
   }
 }
@@ -147,22 +245,20 @@ class UserProfileCard extends StatelessWidget {
                   Container(
                     child: Align(
                       alignment: Alignment.topCenter,
-                      child: Expanded(
-                        child: Stack(children: [
-                          Container(
-                            margin:
-                                EdgeInsets.only(left: 16, right: 16, bottom: 4),
-                            child: ClipOval(
-                              child: SvgPicture.asset(
-                                'assets/icon/no_photo.svg',
-                                width: 96,
-                                height: 96,
-                              ),
+                      child: Stack(children: [
+                        Container(
+                          margin:
+                              EdgeInsets.only(left: 16, right: 16, bottom: 4),
+                          child: ClipOval(
+                            child: SvgPicture.asset(
+                              'assets/icon/no_photo.svg',
+                              width: 96,
+                              height: 96,
                             ),
                           ),
-                          isVerified ? verifiedIcon() : noPhotoCamera(),
-                        ]),
-                      ),
+                        ),
+                        isVerified ? verifiedIcon() : noPhotoCamera(),
+                      ]),
                     ),
                   ),
                   Expanded(
@@ -173,7 +269,7 @@ class UserProfileCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'NickNamejrkgjworjgiowegowjeogiwejgojwegojweogjwoegjowejgowejgoiwejgowjeoigwjeog',
+                              'NickName', //jrkgjworjgiowegowjeogiwejgojwegojweogjwoegjowejgowejgoiwejgowjeoigwjeog',
                               style: AppFonts.bigTitle(textColor: iconColor),
                               textAlign: TextAlign.start,
                             ),

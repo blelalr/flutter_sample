@@ -4,6 +4,7 @@ import 'package:flutter_sample/page/dialog_sample/dialog_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_bloc/infinite_list_bloc_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_cubit/infinite_list_cubit_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_page.dart';
+import 'package:flutter_sample/page/map_sample/map_page.dart';
 import 'package:flutter_sample/page/not_found_navigation_widget.dart';
 import 'package:flutter_sample/page/state_management/bloc/bloc_page.dart';
 import 'package:flutter_sample/page/state_management/cubit/cubit_page.dart';
@@ -39,6 +40,8 @@ class NavigationRoute {
         return normalNavigate(InfiniteListBlocPage());
       case NavigationConstants.INFINITE_CUBIT:
         return normalNavigate(InfiniteListCubitPage());
+      case NavigationConstants.MAP_SAMPLE:
+        return normalNavigate(MapPage());
       // case NavigationConstants.VIDEO_SCROLL:
       //   return normalNavigate(VideoScrollPage());
       case NavigationConstants.TEST_SAMPLE:

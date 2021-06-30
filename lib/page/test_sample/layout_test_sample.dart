@@ -22,7 +22,13 @@ class LayoutTestSample extends StatelessWidget {
             children: [
               Example1(),
               Divider(),
+              SuggestionCard(),
+              Divider(),
               CustomButton(),
+              Divider(),
+              ScalePageView(),
+              Divider(),
+              CarouselView(),
               Divider(),
               FullWidthExample(),
               Divider(),
@@ -41,10 +47,6 @@ class LayoutTestSample extends StatelessWidget {
               HorizontalFlexSpaceExample(),
               Divider(),
               RemainSpaceExample(),
-              Divider(),
-              ScalePageView(),
-              Divider(),
-              CarouselView()
             ],
           ),
         ));
@@ -178,8 +180,18 @@ class HorizontalEqualSpaceExample extends StatelessWidget {
                 color: Colors.blue),
           ),
           Flexible(
-            // flex: 3,
-            child: Container(height: 50, color: Colors.green),
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.green,
+                  child: Text('green'),
+                ),
+                Container(
+                  color: Colors.green,
+                  child: Text('green'),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -267,6 +279,7 @@ class CustomButton extends StatelessWidget {
               text: 'Button with Fill Width ',
               press: () => {print('Press')},
             ),
+            Divider(),
             Text('ButtonSmall v'),
             Divider(),
             ButtonSmall(
@@ -290,6 +303,37 @@ class CustomButton extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SuggestionCard extends StatelessWidget {
+  const SuggestionCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 224, maxWidth: 156),
+      child: Container(
+        constraints: BoxConstraints(minHeight: 120),
+        color: Colors.green,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('NickName'),
+            Text('Account'),
+            ButtonSmall(text: 'Follow', press: () => {})
+          ],
+        ),
+      ),
+      // child: Stack(
+      //   children: [
+      //     Image(
+      //       image: AssetImage("assets/images/img_snoopy.jpeg"),
+      //       fit: BoxFit.cover,
+      //     )
+      //   ],
+      // ),
     );
   }
 }

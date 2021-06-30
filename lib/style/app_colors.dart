@@ -14,6 +14,9 @@ class AppColors {
   static const backgroundDark1st = Color(0xFF202525);
   static const backgroundLight1st = Color(0xFFFFFFFF);
 
+  static const backgroundLightB1 = Color(0xFFF2F4F5);
+  static const backgroundDarkB1 = Color(0xFF0C1212);
+
   static const labelLightL1 = Color(0xFF314146);
   static const labelDarkL1 = Color(0xFFFAFDFF);
 

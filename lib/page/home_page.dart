@@ -36,6 +36,14 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               NavigationService.instance
+                  .navigateToPage(path: NavigationConstants.MAP_SAMPLE);
+            },
+            child: const Text('Map Sample'),
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () {
+              NavigationService.instance
                   .navigateToPage(path: NavigationConstants.TEST_SAMPLE);
             },
             child: const Text('Layout Sample'),

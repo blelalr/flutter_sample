@@ -7,7 +7,7 @@ class ThemeSwitchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeBloc = context.watch<ThemeCubit>();
     return Switch.adaptive(
-      value: themeBloc.state.themeMode == ThemeMode.dark,
+      value: themeBloc.isDarkMode,
       onChanged: (value) {
         themeBloc.toggleTheme(value);
       },

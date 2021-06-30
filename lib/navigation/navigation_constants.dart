@@ -13,6 +13,8 @@ class NavigationConstants {
 
   static const VIDEO_SCROLL = '/videoScroll';
 
+  static const MAP_SAMPLE = '/mapSample';
+
   static const DIALOG_SAMPLE = '/dialogSample';
 
   static const THEME_SAMPLE = '/themeSample';
