@@ -25,7 +25,6 @@ class ButtonSmall extends StatelessWidget {
           style: TextButton.styleFrom(
             primary: Colors.deepOrange.shade900,
             minimumSize: Size(0, 32),
-            alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(9, 7, 9, 7),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(6.0))),
@@ -34,6 +33,9 @@ class ButtonSmall extends StatelessWidget {
           ),
           onPressed: () => {},
           child: Text(text,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
               style: AppFonts.button(
                   textColor:
                       textColor ?? Theme.of(context).colorScheme.onPrimary))),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/page/theme_sample/theme_switch_widget.dart';
+import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +41,7 @@ class _MapPageState extends State<MapPage> {
     }
     return Scaffold(
         appBar: AppBar(
-          actions: [ThemeSwitchWidget()],
+          actions: [SwitchThemeWidget()],
         ),
         body: GoogleMap(
           onMapCreated: (GoogleMapController controller) {

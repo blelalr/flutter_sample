@@ -25,7 +25,6 @@ class ButtonLarge extends StatelessWidget {
           style: TextButton.styleFrom(
             primary: Colors.deepOrange.shade900,
             minimumSize: Size(0, 48),
-            alignment: Alignment.center,
             padding: EdgeInsets.all(15.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12.0))),
@@ -35,6 +34,7 @@ class ButtonLarge extends StatelessWidget {
           ),
           onPressed: () => {},
           child: Text(text,
+              textAlign: TextAlign.center,
               style: AppFonts.button(
                   textColor:
                       textColor ?? Theme.of(context).colorScheme.onPrimary))),

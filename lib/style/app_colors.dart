@@ -23,5 +23,11 @@ class AppColors {
   static const labelLightL2 = Color(0x99284650);
   static const labelDarkL2 = Color(0x99E8F9FC);
 
+  static const secondaryLightP1 = Color(0xFF32A0A6);
+  static const secondaryDarkP1 = Color(0xFF10B2B2);
+
+  static const secondaryLightOnSecondary = Color(0xFFFAFDFF);
+  static const secondaryDarkOnSecondary = Color(0xFF00474A);
+
   static const line83 = Color(0x29B4C2C8);
 }

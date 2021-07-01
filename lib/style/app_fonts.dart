@@ -75,67 +75,60 @@ text-align: right;
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/style/app_colors.dart';
 
 class AppFonts {
   static TextStyle bigTitle({Color? textColor}) {
     return TextStyle(
-      fontSize: 30,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 30,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0,
+        color: textColor);
   }
 
   static TextStyle subTitle({Color? textColor}) {
     return TextStyle(
-      fontSize: 20,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 20,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0,
+        color: textColor);
   }
 
   static TextStyle header({Color? textColor}) {
     return TextStyle(
-      fontSize: 16,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 16,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0,
+        color: textColor);
   }
 
   static TextStyle largeBodyText({Color? textColor}) {
     return TextStyle(
-      fontSize: 16,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 16,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0,
+        color: textColor);
   }
 
   static TextStyle bodyText({Color? textColor}) {
     return TextStyle(
-      fontSize: 14,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 14,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0,
+        color: textColor);
   }
 
   static TextStyle button({Color? textColor}) {
     return TextStyle(
-      fontSize: 14,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 14,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0,
+        color: textColor);
   }
 
   static TextStyle caption({Color? textColor}) {
@@ -144,16 +137,15 @@ class AppFonts {
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         letterSpacing: 0,
-        color: textColor ?? AppColors.primaryLightP1);
+        color: textColor);
   }
 
   static TextStyle mini({Color? textColor}) {
     return TextStyle(
-      fontSize: 10,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0,
-      color: textColor ?? AppColors.labelLightL1,
-    );
+        fontSize: 10,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0,
+        color: textColor);
   }
 }

@@ -28,7 +28,6 @@ class ButtonSmallOutlined extends StatelessWidget {
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
             minimumSize: Size(32, 32),
-            alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(9, 7, 9, 7),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(6.0))),
@@ -38,6 +37,8 @@ class ButtonSmallOutlined extends StatelessWidget {
           child: (text != null)
               ? Text(text!,
                   maxLines: 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                   style: AppFonts.button(
                       textColor:
                           textColor ?? Theme.of(context).iconTheme.color))

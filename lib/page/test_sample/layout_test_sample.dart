@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/page/test_sample/button/button_large.dart';
-import 'package:flutter_sample/page/test_sample/button/button_small.dart';
+import 'package:flutter_sample/custom_widget/button_large.dart';
+import 'package:flutter_sample/custom_widget/button_small.dart';
+import 'package:flutter_sample/custom_widget/suggestion_card.dart';
+import 'package:flutter_sample/custom_widget/icon_button_default.dart';
+import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
+import 'package:flutter_sample/model/suggestion_model.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 import 'package:flutter_sample/page/test_sample/carousel_view.dart';
@@ -14,15 +18,28 @@ class LayoutTestSample extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Layout Test Sample'),
+          actions: [SwitchThemeWidget()],
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Example1(),
+              TextStyle(),
               Divider(),
-              SuggestionCard(),
+              Container(
+                width: double.infinity,
+                color: Colors.grey,
+                child: Center(
+                  child: SuggestionCard(
+                      suggestionModel: SuggestionModel(
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
+                          'nickName',
+                          'account',
+                          TYPE.normal,
+                          false)),
+                ),
+              ),
               Divider(),
               CustomButton(),
               Divider(),
@@ -53,7 +70,7 @@ class LayoutTestSample extends StatelessWidget {
   }
 }
 
-class Example1 extends StatelessWidget {
+class TextStyle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,11 +79,17 @@ class Example1 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Big Title", style: AppFonts.bigTitle()),
+          Divider(),
           Text("SubTitle", style: AppFonts.subTitle()),
+          Divider(),
           Text("Large Body Text", style: AppFonts.largeBodyText()),
+          Divider(),
           Text("Body Text", style: AppFonts.bodyText()),
+          Divider(),
           Text("Button Text", style: AppFonts.button()),
+          Divider(),
           Text("Caption Text", style: AppFonts.caption()),
+          Divider(),
           Text("Mini Text", style: AppFonts.mini()),
         ],
       ),
@@ -257,6 +280,8 @@ class CustomButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            Text('Theme Icon Button'),
+            IconButtonDefault(iconPath: 'assets/icon/close.svg'),
             Text('LargeButton v'),
             Divider(),
             ButtonLarge(
@@ -303,37 +328,6 @@ class CustomButton extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class SuggestionCard extends StatelessWidget {
-  const SuggestionCard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 224, maxWidth: 156),
-      child: Container(
-        constraints: BoxConstraints(minHeight: 120),
-        color: Colors.green,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('NickName'),
-            Text('Account'),
-            ButtonSmall(text: 'Follow', press: () => {})
-          ],
-        ),
-      ),
-      // child: Stack(
-      //   children: [
-      //     Image(
-      //       image: AssetImage("assets/images/img_snoopy.jpeg"),
-      //       fit: BoxFit.cover,
-      //     )
-      //   ],
-      // ),
     );
   }
 }

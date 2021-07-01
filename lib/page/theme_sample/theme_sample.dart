@@ -1,142 +1,81 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/page/test_sample/button/button_smaill_outlined.dart';
-import 'package:flutter_sample/page/test_sample/button/button_small.dart';
-import 'package:flutter_sample/page/theme_sample/theme_switch_widget.dart';
+import 'package:flutter_sample/custom_widget/button_small_outlined.dart';
+import 'package:flutter_sample/custom_widget/button_small.dart';
+import 'package:flutter_sample/custom_widget/suggestion_card.dart';
+import 'package:flutter_sample/custom_widget/icon_button_default.dart';
+import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
+import 'package:flutter_sample/custom_widget/text_see_more.dart';
+import 'package:flutter_sample/model/suggestion_model.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ThemeSample extends StatelessWidget {
   const ThemeSample({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = Theme.of(context).iconTheme.color;
-    final primaryColor = Theme.of(context).primaryColor;
-    final themeBloc = context.watch<ThemeCubit>();
+    var list = <SuggestionModel>[
+      SuggestionModel(
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
+          'nickName',
+          'account',
+          TYPE.normal,
+          false),
+      SuggestionModel(
+          'https://www.liveabout.com/thmb/pVU4LPH5swXApRrz2hvskfWdTHE=/640x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/sp809_Something_Wall-Mart_This_Way_Comes_1-56a00a4f5f9b58eba4ae9a93.jpg',
+          'nickName',
+          'account',
+          TYPE.normal,
+          true),
+      SuggestionModel(
+          'https://www.liveabout.com/thmb/KPu6o0bmkKq2oGH9brQWolIf7IE=/479x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/tomandjerry-56a00b943df78cafda9fcac4.jpg',
+          'nickName',
+          'account',
+          TYPE.verify,
+          false),
+      SuggestionModel(
+          'https://www.liveabout.com/thmb/3mCctbAuSJsL1a9H2SzPDiYm0O8=/1367x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/powerpuff_girls-56a00bc45f9b58eba4aea61d.jpg',
+          '#Dog',
+          '1.2k Posts',
+          TYPE.hashTag,
+          true),
+      SuggestionModel(
+          'https://www.liveabout.com/thmb/9C-lNYu_kohW6x4393PbYOG_dYQ=/1200x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dexters_laboratory-56a010303df78cafda9fdf8b.jpg',
+          '#Cat',
+          '6k Posts',
+          TYPE.hashTag,
+          false),
+    ];
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            iconSize: 24,
-            icon: SvgPicture.asset('assets/icon/arrow_left.svg',
-                color: iconColor),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          leading: IconButtonDefault(
+              iconPath: 'assets/icon/arrow_left.svg',
+              press: () => Navigator.pop(context)),
           elevation: 1,
           actions: [
-            ThemeSwitchWidget(),
-            IconButton(
-              iconSize: 24,
-              icon: SvgPicture.asset('assets/icon/notification_s.svg',
-                  color: iconColor),
-              onPressed: () {},
-            ),
-            IconButton(
-              iconSize: 24,
-              icon: SvgPicture.asset('assets/icon/menu.svg', color: iconColor),
-              onPressed: () {},
-            ),
+            SwitchThemeWidget(),
+            IconButtonDefault(iconPath: 'assets/icon/notification_s.svg'),
+            IconButtonDefault(iconPath: 'assets/icon/menu.svg')
           ],
         ),
         body: CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(
-                child: Column(
-              children: [
-                UpgradeCard(),
-                UserProfileCard(),
-                ProfileButtonStack(),
-              ],
-            )),
-            SliverToBoxAdapter(
-              child: Stack(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 12,
-                    color: primaryColor,
-                  ),
-                  Positioned(
-                    right: 16,
-                    child: SvgPicture.asset(
-                      'assets/icon/popupArrow.svg',
-                      width: 32,
-                      height: 14,
-                      color: themeBloc.isDarkMode
-                          ? AppColors.backgroundDarkB1
-                          : AppColors.backgroundLightB1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-                child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                color: themeBloc.isDarkMode
-                    ? AppColors.backgroundDarkB1
-                    : AppColors.backgroundLightB1,
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(
-                          width: 150,
-                          child: Card(
-                            child: Container(
-                              color: Theme.of(context).hintColor,
-                            ),
-                          )),
-                      Container(
-                          width: 150,
-                          height: 150, //change height All element change
-                          child: Card(
-                            child: Container(
-                              color: Theme.of(context).hintColor,
-                            ),
-                          )),
-                      Container(
-                          width: 150,
-                          child: Card(
-                            child: Container(
-                              color: Theme.of(context).hintColor,
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            )),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 200.0,
-                color: themeBloc.isDarkMode
-                    ? AppColors.backgroundDarkB1
-                    : AppColors.backgroundLightB1,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        width: 150.0,
-                        height: 90,
-                        child: Card(
-                          child: Container(
-                            color: Theme.of(context).hintColor,
-                          ),
-                        ));
-                  },
-                ),
-              ),
-            ),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              TopFrame(),
+              UserProfileFrame(),
+              ButtonStackFrame(),
+              SuggestionFrame(suggestionList: list),
+              DescriptionFrame()
+            ])),
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -152,14 +91,11 @@ class ThemeSample extends StatelessWidget {
   }
 }
 
-class UpgradeCard extends StatelessWidget {
-  const UpgradeCard({Key? key}) : super(key: key);
+class TopFrame extends StatelessWidget {
+  const TopFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = Theme.of(context).iconTheme.color;
-    final hintColor = Theme.of(context).hintColor;
-
     return Container(
         width: double.infinity,
         padding: EdgeInsets.only(bottom: 8),
@@ -181,16 +117,11 @@ class UpgradeCard extends StatelessWidget {
                   ),
                 ),
                 Text('Upgrade to a Free Official Account',
-                    style: AppFonts.button(textColor: iconColor)),
+                    style: AppFonts.button()),
                 Positioned(
                     right: 0,
                     top: 0,
-                    child: IconButton(
-                      iconSize: 24,
-                      icon: SvgPicture.asset('assets/icon/close.svg',
-                          color: iconColor),
-                      onPressed: () => closeClick(),
-                    ))
+                    child: IconButtonDefault(iconPath: 'assets/icon/close.svg'))
               ],
             ),
             Padding(
@@ -198,7 +129,7 @@ class UpgradeCard extends StatelessWidget {
                   const EdgeInsets.only(left: 32, right: 32, top: 8, bottom: 8),
               child: Text(
                 'Grow your profile and unlock features such as customizable contact buttons, insights, verification badges and more.',
-                style: AppFonts.caption(textColor: hintColor),
+                style: AppFonts.caption(textColor: Theme.of(context).hintColor),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -226,14 +157,12 @@ class UpgradeCard extends StatelessWidget {
   }
 }
 
-class UserProfileCard extends StatelessWidget {
-  const UserProfileCard({Key? key}) : super(key: key);
+class UserProfileFrame extends StatelessWidget {
+  const UserProfileFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var isVerified = false;
-    final iconColor = Theme.of(context).iconTheme.color;
-    final hintColor = Theme.of(context).hintColor;
     return Column(
       children: [
         ConstrainedBox(
@@ -270,19 +199,21 @@ class UserProfileCard extends StatelessWidget {
                           children: [
                             Text(
                               'NickName', //jrkgjworjgiowegowjeogiwejgojwegojweogjwoegjowejgowejgoiwejgowjeoigwjeog',
-                              style: AppFonts.bigTitle(textColor: iconColor),
+                              style: AppFonts.bigTitle(),
                               textAlign: TextAlign.start,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SvgPicture.asset('assets/icon/lock_f.svg',
-                                    color: hintColor, width: 18, height: 18),
+                                    color: Theme.of(context).hintColor,
+                                    width: 18,
+                                    height: 18),
                                 Expanded(
                                   child: Text(
                                     'uid3625174215436', //7584efiojweiofjioewjfojewoifjowejfiowjeofjweiofjowejfiowejiof',
-                                    style:
-                                        AppFonts.button(textColor: hintColor),
+                                    style: AppFonts.button(
+                                        textColor: Theme.of(context).hintColor),
                                     textAlign: TextAlign.start,
                                   ),
                                 )
@@ -298,9 +229,9 @@ class UserProfileCard extends StatelessWidget {
           margin: EdgeInsets.only(top: 24, left: 20, bottom: 24, right: 20),
           child: Row(
             children: [
-              numberItem('112', 'Followers', iconColor),
-              numberItem('324', 'Following', iconColor),
-              numberItem('12', 'Videos', iconColor),
+              numberItem('112', 'Followers', context),
+              numberItem('324', 'Following', context),
+              numberItem('12', 'Videos', context),
             ],
           ),
         )
@@ -326,28 +257,23 @@ class UserProfileCard extends StatelessWidget {
         height: 28,
       ));
 
-  numberItem(String number, String title, Color? iconColor) => Flexible(
+  numberItem(String number, String title, BuildContext? context) => Flexible(
         child: Center(
           child: Column(
             children: [
-              Container(
-                  child: Text('$number',
-                      style: AppFonts.subTitle(textColor: iconColor))),
-              Container(
-                  child: Text('$title',
-                      style: AppFonts.caption(textColor: iconColor))),
+              Container(child: Text('$number', style: AppFonts.subTitle())),
+              Container(child: Text('$title', style: AppFonts.caption())),
             ],
           ),
         ),
       );
 }
 
-class ProfileButtonStack extends StatelessWidget {
-  const ProfileButtonStack({Key? key}) : super(key: key);
+class ButtonStackFrame extends StatelessWidget {
+  const ButtonStackFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = Theme.of(context).iconTheme.color;
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: Column(children: [
@@ -371,8 +297,7 @@ class ProfileButtonStack extends StatelessWidget {
                   press: () => {}),
             )),
             ButtonSmallOutlined(
-                icon: SvgPicture.asset('assets/icon/arrow_left.svg',
-                    color: iconColor),
+                icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
                 press: () => {})
           ],
         ),
@@ -387,8 +312,7 @@ class ProfileButtonStack extends StatelessWidget {
                   press: () => {}),
             )),
             ButtonSmallOutlined(
-                icon: SvgPicture.asset('assets/icon/arrow_left.svg',
-                    color: iconColor),
+                icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
                 press: () => {})
           ],
         ),
@@ -440,12 +364,118 @@ class ProfileButtonStack extends StatelessWidget {
                   press: () => {}),
             )),
             ButtonSmallOutlined(
-                icon: SvgPicture.asset('assets/icon/arrow_left.svg',
-                    color: iconColor),
+                icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
                 press: () => {})
           ],
         ),
       ]),
+    );
+  }
+}
+
+class SuggestionFrame extends StatelessWidget {
+  final List<SuggestionModel> suggestionList;
+  const SuggestionFrame({Key? key, required this.suggestionList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeBloc = context.watch<ThemeCubit>();
+    return Column(children: [
+      Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 12,
+            color: Theme.of(context).primaryColor,
+          ),
+          Positioned(
+            right: 16,
+            child: SvgPicture.asset(
+              'assets/icon/popupArrow.svg',
+              width: 32,
+              height: 14,
+              color: themeBloc.isDarkMode
+                  ? AppColors.backgroundDarkB1
+                  : AppColors.backgroundLightB1,
+            ),
+          ),
+        ],
+      ),
+      Container(
+          padding: EdgeInsets.only(top: 12, left: 16, right: 16),
+          width: double.infinity,
+          color: themeBloc.isDarkMode
+              ? AppColors.backgroundDarkB1
+              : AppColors.backgroundLightB1,
+          child: Text(
+            'Suggested for You',
+            style: AppFonts.button(textColor: Theme.of(context).hintColor),
+          )),
+      Container(
+        height: 252,
+        color: themeBloc.isDarkMode
+            ? AppColors.backgroundDarkB1
+            : AppColors.backgroundLightB1,
+        child: ListView.builder(
+          padding: EdgeInsets.all(10),
+          scrollDirection: Axis.horizontal,
+          itemCount: suggestionList.length,
+          itemBuilder: (context, index) {
+            return SuggestionCard(suggestionModel: suggestionList[index]);
+          },
+        ),
+      ),
+    ]);
+  }
+}
+
+class DescriptionFrame extends StatelessWidget {
+  const DescriptionFrame({Key? key}) : super(key: key);
+
+  void openWebsiteByUrl(String urlString) async {
+    await canLaunch(urlString)
+        ? await launch(urlString)
+        : debugPrint('Could not launch $urlString');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextSeeMore(
+            'Wiki engines usually allow content to be written using a simplified markup language and sometimes edited with the help of a rich-text editor. There are dozens of different wiki engines in use, both standalone and part of other software, such as bug tracking systems.\nSome wiki engines are open source, whereas others are proprietary. Some permit control over different functions (levels of access); for example, editing rights may permit changing, adding, or removing material.',
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: "https://www.google.com",
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => openWebsiteByUrl("https://www.google.com")),
+            ])),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: "Followed by ",
+                  style:
+                      AppFonts.caption(textColor: Theme.of(context).hintColor)),
+              TextSpan(text: "Vicky, Helenli, ", style: AppFonts.caption()),
+              TextSpan(
+                  text: "and ",
+                  style:
+                      AppFonts.caption(textColor: Theme.of(context).hintColor)),
+              TextSpan(text: "Popo ", style: AppFonts.caption()),
+            ])),
+          ),
+        ],
+      ),
     );
   }
 }

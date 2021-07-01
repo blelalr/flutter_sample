@@ -22,14 +22,14 @@ class MyApp extends StatelessWidget {
             create: (context) => DialogCubit(),
           ),
           BlocProvider(
-            create: (context) => ThemeCubit(),
+            create: (context) => ThemeCubit()..getLocalTheme(),
           ),
         ],
         child: BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
             return MaterialApp(
               title: 'Flutter Demo',
-              themeMode: context.read<ThemeCubit>().state.themeMode,
+              themeMode: state.themeMode,
               theme: AppThemes.lightTheme,
               darkTheme: AppThemes.darkTheme,
               home: MyHomePage(title: 'Flutter Demo'),
