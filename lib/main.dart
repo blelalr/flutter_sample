@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/navigation/navigation_route.dart';
 import 'package:flutter_sample/navigation/navigation_service.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_sample/style/app_themes.dart';
 import 'bloc/theme/theme_cubit.dart';
 
 void main() {
+  debugProfilePaintsEnabled = true;
   runApp(MyApp());
 }
 

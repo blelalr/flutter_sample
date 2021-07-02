@@ -74,13 +74,12 @@ class ThemeSample extends StatelessWidget {
               UserProfileFrame(),
               ButtonStackFrame(),
               SuggestionFrame(suggestionList: list),
-              DescriptionFrame()
+              DescriptionFrame(),
+              CompleteProfileFrame(),
             ])),
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Container(height: 200, color: Colors.green),
-                  Container(height: 200, color: Colors.pink),
                   Container(height: 200, color: Colors.green),
                   Container(height: 200, color: Colors.pink),
                 ],
@@ -105,25 +104,7 @@ class TopFrame extends StatelessWidget {
             Container(
                 width: double.infinity, height: 0.5, color: AppColors.line83),
             SizedBox(height: 8),
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/pic/upgrade_to_official_account_p01.png',
-                    width: 144,
-                    height: 144,
-                  ),
-                ),
-                Text('Upgrade to a Free Official Account',
-                    style: AppFonts.button()),
-                Positioned(
-                    right: 0,
-                    top: 0,
-                    child: IconButtonDefault(iconPath: 'assets/icon/close.svg'))
-              ],
-            ),
+            TopFrameStackView(),
             Padding(
               padding:
                   const EdgeInsets.only(left: 32, right: 32, top: 8, bottom: 8),
@@ -157,6 +138,34 @@ class TopFrame extends StatelessWidget {
   }
 }
 
+class TopFrameStackView extends StatelessWidget {
+  const TopFrameStackView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Container(
+          width: double.infinity,
+          child: Image.asset(
+            'assets/pic/upgrade_to_official_account_p01.png',
+            width: 144,
+            height: 144,
+          ),
+        ),
+        Text('Upgrade to a Free Official Account', style: AppFonts.button()),
+        Positioned(
+            right: 0,
+            top: 0,
+            child: IconButtonDefault(
+                iconPath: 'assets/icon/close.svg',
+                color: Theme.of(context).hintColor))
+      ],
+    );
+  }
+}
+
 class UserProfileFrame extends StatelessWidget {
   const UserProfileFrame({Key? key}) : super(key: key);
 
@@ -171,102 +180,161 @@ class UserProfileFrame extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Stack(children: [
-                        Container(
-                          margin:
-                              EdgeInsets.only(left: 16, right: 16, bottom: 4),
-                          child: ClipOval(
-                            child: SvgPicture.asset(
-                              'assets/icon/no_photo.svg',
-                              width: 96,
-                              height: 96,
-                            ),
-                          ),
-                        ),
-                        isVerified ? verifiedIcon() : noPhotoCamera(),
-                      ]),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'NickName', //jrkgjworjgiowegowjeogiwejgojwegojweogjwoegjowejgowejgoiwejgowjeoigwjeog',
-                              style: AppFonts.bigTitle(),
-                              textAlign: TextAlign.start,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset('assets/icon/lock_f.svg',
-                                    color: Theme.of(context).hintColor,
-                                    width: 18,
-                                    height: 18),
-                                Expanded(
-                                  child: Text(
-                                    'uid3625174215436', //7584efiojweiofjioewjfojewoifjowejfiowjeofjweiofjowejfiowejiof',
-                                    style: AppFonts.button(
-                                        textColor: Theme.of(context).hintColor),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                )
-                              ],
-                            )
-                          ]),
-                    ),
-                  )
+                  UserProfileFramePhotoView(isVerified: isVerified),
+                  UserProfileFrameNameView(),
                 ],
               ),
             )),
-        Container(
-          margin: EdgeInsets.only(top: 24, left: 20, bottom: 24, right: 20),
-          child: Row(
+        BuildNumberItems(numberItems: [
+          NumberItem(number: '112', title: 'Followers'),
+          NumberItem(number: '324', title: 'Following'),
+          NumberItem(number: '12', title: 'Videos')
+        ])
+      ],
+    );
+  }
+}
+
+class BuildNumberItems extends StatelessWidget {
+  final List<Widget> numberItems;
+  const BuildNumberItems({Key? key, required this.numberItems})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 24, left: 20, bottom: 24, right: 20),
+      child: Row(children: numberItems),
+    );
+  }
+}
+
+class NumberItem extends StatelessWidget {
+  final String number;
+  final String title;
+  const NumberItem({Key? key, required this.number, required this.title})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Center(
+        child: Column(
+          children: [
+            Container(child: Text('$number', style: AppFonts.subTitle())),
+            Container(child: Text('$title', style: AppFonts.caption())),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class UserProfileFramePhotoView extends StatelessWidget {
+  final isVerified;
+
+  const UserProfileFramePhotoView({Key? key, this.isVerified})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Stack(children: [
+          Container(
+            margin: EdgeInsets.only(left: 16, right: 16, bottom: 4),
+            child: ClipOval(
+              child: SvgPicture.asset(
+                'assets/icon/no_photo.svg',
+                width: 96,
+                height: 96,
+              ),
+            ),
+          ),
+          isVerified ? VerifiedIcon() : NoPhotoIcon(),
+        ]),
+      ),
+    );
+  }
+}
+
+class VerifiedIcon extends StatelessWidget {
+  const VerifiedIcon({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        left: 82 + 16 - 14,
+        top: 82 - 14,
+        child: Image.asset(
+          'assets/pic/verified_f_profile.png',
+          width: 28,
+          height: 28,
+        ));
+  }
+}
+
+class NoPhotoIcon extends StatelessWidget {
+  const NoPhotoIcon({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        left: 82 + 16 - 18,
+        top: 82 - 18,
+        child: Image.asset(
+          'assets/pic/icon_with_o_small.png',
+          width: 36,
+          height: 36,
+        ));
+  }
+}
+
+class UserProfileFrameNameView extends StatelessWidget {
+  const UserProfileFrameNameView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 16),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              numberItem('112', 'Followers', context),
-              numberItem('324', 'Following', context),
-              numberItem('12', 'Videos', context),
-            ],
+              Text(
+                'NickName', //jrkgjworjgiowegowjeogiwejgojwegojweogjwoegjowejgowejgoiwejgowjeoigwjeog',
+                style: AppFonts.bigTitle(),
+                textAlign: TextAlign.start,
+              ),
+              UidIconText()
+            ]),
+      ),
+    );
+  }
+}
+
+class UidIconText extends StatelessWidget {
+  const UidIconText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SvgPicture.asset('assets/icon/lock_f.svg',
+            color: Theme.of(context).hintColor, width: 18, height: 18),
+        Expanded(
+          child: Text(
+            'uid3625174215436', //7584efiojweiofjioewjfojewoifjowejfiowjeofjweiofjowejfiowejiof',
+            style: AppFonts.button(textColor: Theme.of(context).hintColor),
+            textAlign: TextAlign.start,
           ),
         )
       ],
     );
   }
-
-  noPhotoCamera() => Positioned(
-      left: 82 + 16 - 18,
-      top: 82 - 18,
-      child: Image.asset(
-        'assets/pic/icon_with_o_small.png',
-        width: 36,
-        height: 36,
-      ));
-
-  verifiedIcon() => Positioned(
-      left: 82 + 16 - 14,
-      top: 82 - 14,
-      child: Image.asset(
-        'assets/pic/verified_f_profile.png',
-        width: 28,
-        height: 28,
-      ));
-
-  numberItem(String number, String title, BuildContext? context) => Flexible(
-        child: Center(
-          child: Column(
-            children: [
-              Container(child: Text('$number', style: AppFonts.subTitle())),
-              Container(child: Text('$title', style: AppFonts.caption())),
-            ],
-          ),
-        ),
-      );
 }
 
 class ButtonStackFrame extends StatelessWidget {
@@ -277,99 +345,76 @@ class ButtonStackFrame extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: Column(children: [
-        Row(
-          children: [
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmall(
-                width: double.infinity,
-                text: 'Type Something',
-                press: () => {},
-              ),
-            )),
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmallOutlined(
-                  width: double.infinity,
-                  text: 'Type Something',
-                  press: () => {}),
-            )),
-            ButtonSmallOutlined(
-                icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
-                press: () => {})
-          ],
-        ),
-        Row(
-          children: [
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmallOutlined(
-                  width: double.infinity,
-                  text: 'Type Something',
-                  press: () => {}),
-            )),
-            ButtonSmallOutlined(
-                icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
-                press: () => {})
-          ],
-        ),
-        Row(
-          children: [
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmall(
-                width: double.infinity,
-                text: 'Type Something',
-                press: () => {},
-              ),
-            )),
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 0),
-              child: ButtonSmallOutlined(
-                  width: double.infinity,
-                  text: 'Type Something',
-                  press: () => {}),
-            )),
-          ],
-        ),
-        Row(
-          children: [
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmallOutlined(
-                  width: double.infinity,
-                  text: 'Type Something',
-                  press: () => {}),
-            )),
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmallOutlined(
-                  width: double.infinity,
-                  text: 'Type Something',
-                  press: () => {}),
-            )),
-            Flexible(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ButtonSmallOutlined(
-                  width: double.infinity,
-                  text: 'Type Something',
-                  press: () => {}),
-            )),
-            ButtonSmallOutlined(
-                icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
-                press: () => {})
-          ],
-        ),
+        BuildButtonRow(buttons: [
+          ButtonStackFrameNormalButton(),
+          ButtonStackFrameOutLinedButton(),
+          ButtonSmallOutlined(
+              icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
+              press: () => {})
+        ]),
+        BuildButtonRow(buttons: [
+          ButtonStackFrameOutLinedButton(),
+          ButtonSmallOutlined(
+              icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
+              press: () => {})
+        ]),
+        BuildButtonRow(buttons: [
+          ButtonStackFrameNormalButton(),
+          ButtonStackFrameOutLinedButton(),
+        ]),
+        BuildButtonRow(buttons: [
+          ButtonStackFrameOutLinedButton(),
+          ButtonStackFrameOutLinedButton(),
+          ButtonStackFrameOutLinedButton(),
+          ButtonSmallOutlined(
+              icon: SvgPicture.asset('assets/icon/arrow_left.svg'),
+              press: () => {})
+        ]),
       ]),
     );
+  }
+}
+
+class BuildButtonRow extends StatelessWidget {
+  final List<Widget> buttons;
+  const BuildButtonRow({Key? key, required this.buttons}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: buttons,
+    );
+  }
+}
+
+class ButtonStackFrameOutLinedButton extends StatelessWidget {
+  const ButtonStackFrameOutLinedButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+        child: Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: ButtonSmallOutlined(
+          width: double.infinity, text: 'Type Something', press: () => {}),
+    ));
+  }
+}
+
+class ButtonStackFrameNormalButton extends StatelessWidget {
+  const ButtonStackFrameNormalButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+        child: Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: ButtonSmall(
+        width: double.infinity,
+        text: 'Type Something',
+        press: () => {},
+      ),
+    ));
   }
 }
 
@@ -477,5 +522,129 @@ class DescriptionFrame extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class CompleteProfileFrame extends StatelessWidget {
+  const CompleteProfileFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BuildCompleteProfileView(widgets: [
+      CompleteProfileItem(
+          title: 'Add Profile Picture',
+          content:
+              'this is content this is content this is content this is content this is content this is content this is content this is content this is content this is content this is content this is content '),
+      CompleteProfileItem(title: 'This is Title', content: 'this is content'),
+      CompleteProfileItem(title: 'This is Title', content: 'this is content'),
+      CompleteProfileItem(title: 'This is Title', content: 'this is content')
+    ]);
+  }
+}
+
+class CompleteProfileItem extends StatelessWidget {
+  final String title;
+  final String content;
+  const CompleteProfileItem(
+      {Key? key, required this.title, required this.content})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+            constraints: BoxConstraints(minHeight: 136),
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: context.watch<ThemeCubit>().isDarkMode
+                  ? AppColors.BackgroundElevatedDark1st
+                  : AppColors.BackgroundElevatedLight1st,
+              border: Border.all(
+                color: context.watch<ThemeCubit>().isDarkMode
+                    ? AppColors.innerBorderDark
+                    : AppColors.innerBorderLight,
+                width: 1,
+              ),
+            ),
+            width: 220,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12, top: 15, right: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset('assets/icon/lock_f.svg',
+                          width: 20,
+                          height: 20,
+                          color: Theme.of(context).iconTheme.color),
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          '$title',
+                          style: AppFonts.button(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Flexible(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10, bottom: 12),
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Text(
+                        '$content',
+                        style: AppFonts.caption(
+                            textColor: Theme.of(context).hintColor),
+                      ),
+                    ),
+                  ),
+                  Container(
+                      width: double.infinity,
+                      height: 0.5,
+                      color: AppColors.line83),
+                  Container(
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    width: double.infinity,
+                    child: Text(
+                      'Edit',
+                      textAlign: TextAlign.center,
+                      style: AppFonts.button(
+                          textColor: Theme.of(context).colorScheme.primary),
+                    ),
+                  )
+                ],
+              ),
+            )),
+        Positioned(
+            top: 0,
+            right: 0,
+            child: SvgPicture.asset('assets/icon/icon_colse.svg',
+                width: 20, height: 20)),
+      ],
+    );
+  }
+}
+
+class BuildCompleteProfileView extends StatelessWidget {
+  final List<Widget> widgets;
+  const BuildCompleteProfileView({Key? key, required this.widgets})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+        padding: EdgeInsets.all(8),
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          color: Theme.of(context).primaryColor,
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: widgets,
+            ),
+          ),
+        ));
   }
 }

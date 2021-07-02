@@ -29,5 +29,11 @@ class AppColors {
   static const secondaryLightOnSecondary = Color(0xFFFAFDFF);
   static const secondaryDarkOnSecondary = Color(0xFF00474A);
 
+  static const BackgroundElevatedLight1st = Color(0xFFFFFFFF);
+  static const BackgroundElevatedDark1st = Color(0xFF353A3A);
+
   static const line83 = Color(0x29B4C2C8);
+
+  static const innerBorderLight = Color(0x4D284650);
+  static const innerBorderDark = Color(0x4DE8F9FC);
 }

@@ -12,7 +12,7 @@ class AppThemes {
       secondary: AppColors.secondaryDarkP1,
       onSecondary: AppColors.secondaryDarkOnSecondary,
     ),
-    iconTheme: IconThemeData(color: AppColors.labelDarkL1, opacity: 0.8),
+    iconTheme: IconThemeData(color: AppColors.labelDarkL1),
   );
 
   static final lightTheme = ThemeData(
@@ -25,6 +25,6 @@ class AppThemes {
       secondary: AppColors.secondaryLightP1,
       onSecondary: AppColors.secondaryLightOnSecondary,
     ),
-    iconTheme: IconThemeData(color: AppColors.labelLightL1, opacity: 0.8),
+    iconTheme: IconThemeData(color: AppColors.labelLightL1),
   );
 }
