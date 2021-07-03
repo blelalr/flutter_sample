@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_sample/bloc/complete_profile/complete_profile_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/custom_widget/button_small_outlined.dart';
 import 'package:flutter_sample/custom_widget/button_small.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_sample/custom_widget/suggestion_card.dart';
 import 'package:flutter_sample/custom_widget/icon_button_default.dart';
 import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
 import 'package:flutter_sample/custom_widget/text_see_more.dart';
+import 'package:flutter_sample/model/profile_task_model.dart';
 import 'package:flutter_sample/model/suggestion_model.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
@@ -75,7 +77,7 @@ class ThemeSample extends StatelessWidget {
               ButtonStackFrame(),
               SuggestionFrame(suggestionList: list),
               DescriptionFrame(),
-              CompleteProfileFrame(),
+              ProfileTaskFrame(),
             ])),
             SliverToBoxAdapter(
               child: Column(
@@ -525,28 +527,20 @@ class DescriptionFrame extends StatelessWidget {
   }
 }
 
-class CompleteProfileFrame extends StatelessWidget {
-  const CompleteProfileFrame({Key? key}) : super(key: key);
+class ProfileTaskFrame extends StatelessWidget {
+  const ProfileTaskFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BuildCompleteProfileView(widgets: [
-      CompleteProfileItem(
-          title: 'Add Profile Picture',
-          content:
-              'this is content this is content this is content this is content this is content this is content this is content this is content this is content this is content this is content this is content '),
-      CompleteProfileItem(title: 'This is Title', content: 'this is content'),
-      CompleteProfileItem(title: 'This is Title', content: 'this is content'),
-      CompleteProfileItem(title: 'This is Title', content: 'this is content')
-    ]);
+    return BlocProvider<ProfileTaskCubit>(
+        create: (context) => ProfileTaskCubit()..fetchProfileTask(),
+        child: BuildProfileTaskView());
   }
 }
 
 class CompleteProfileItem extends StatelessWidget {
-  final String title;
-  final String content;
-  const CompleteProfileItem(
-      {Key? key, required this.title, required this.content})
+  final ProfileTaskModel profileTaskModel;
+  const CompleteProfileItem(this.profileTaskModel, {Key? key})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -575,15 +569,17 @@ class CompleteProfileItem extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      SvgPicture.asset('assets/icon/lock_f.svg',
+                      SvgPicture.asset('${profileTaskModel.iconPath}',
                           width: 20,
                           height: 20,
                           color: Theme.of(context).iconTheme.color),
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          '$title',
-                          style: AppFonts.button(),
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            '${profileTaskModel.title}',
+                            style: AppFonts.button(),
+                          ),
                         ),
                       ),
                     ],
@@ -594,7 +590,7 @@ class CompleteProfileItem extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: Text(
-                        '$content',
+                        '${profileTaskModel.content}',
                         style: AppFonts.caption(
                             textColor: Theme.of(context).hintColor),
                       ),
@@ -608,7 +604,7 @@ class CompleteProfileItem extends StatelessWidget {
                     padding: EdgeInsets.only(top: 15, bottom: 15),
                     width: double.infinity,
                     child: Text(
-                      'Edit',
+                      '${profileTaskModel.buttonText}',
                       textAlign: TextAlign.center,
                       style: AppFonts.button(
                           textColor: Theme.of(context).colorScheme.primary),
@@ -620,31 +616,49 @@ class CompleteProfileItem extends StatelessWidget {
         Positioned(
             top: 0,
             right: 0,
-            child: SvgPicture.asset('assets/icon/icon_colse.svg',
-                width: 20, height: 20)),
+            child: GestureDetector(
+              onTap: () => {
+                context
+                    .read<ProfileTaskCubit>()
+                    .deleteCompleteTask(profileTaskModel)
+              },
+              child: SvgPicture.asset('assets/icon/icon_colse.svg',
+                  color: Theme.of(context).hintColor, width: 20, height: 20),
+            ))
       ],
     );
   }
 }
 
-class BuildCompleteProfileView extends StatelessWidget {
-  final List<Widget> widgets;
-  const BuildCompleteProfileView({Key? key, required this.widgets})
-      : super(key: key);
+class BuildProfileTaskView extends StatelessWidget {
+  // final List<Widget> widgets;
+  const BuildProfileTaskView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         padding: EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,
-        child: Container(
-          color: Theme.of(context).primaryColor,
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: widgets,
-            ),
+        child: IntrinsicHeight(
+          child: BlocBuilder<ProfileTaskCubit, ProfileTaskState>(
+            builder: (context, state) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: List.generate(
+                    updateProfileTask(state).length,
+                    (index) =>
+                        CompleteProfileItem(updateProfileTask(state)[index])),
+              );
+            },
           ),
         ));
+  }
+
+  List<ProfileTaskModel> updateProfileTask(ProfileTaskState state) {
+    if (state is ProfileTaskUpdate) {
+      return state.profileTasks;
+    } else {
+      return [];
+    }
   }
 }
