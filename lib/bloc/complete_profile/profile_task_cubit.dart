@@ -2,18 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_sample/model/profile_task_model.dart';
 import 'package:meta/meta.dart';
 
-part 'complete_profile_state.dart';
+part 'profile_task_state.dart';
 
 class ProfileTaskCubit extends Cubit<ProfileTaskState> {
   ProfileTaskCubit() : super(ProfileTaskInitial());
 
   void fetchProfileTask() {
-    List<ProfileTaskModel> profileTasks = getFakeData();
-
-    emit(ProfileTaskUpdate(profileTasks: profileTasks));
+    emit(ProfileTaskUpdate(profileTasks: getFakeData()));
   }
 
-  void deleteCompleteTask(ProfileTaskModel profileTaskModel) {
+  void deleteProfileTask(ProfileTaskModel profileTaskModel) {
     if (state is ProfileTaskUpdate) {
       (state as ProfileTaskUpdate).profileTasks.remove(profileTaskModel);
       emit(ProfileTaskUpdate(

@@ -1,4 +1,4 @@
-part of 'complete_profile_cubit.dart';
+part of 'profile_task_cubit.dart';
 
 @immutable
 abstract class ProfileTaskState {}
