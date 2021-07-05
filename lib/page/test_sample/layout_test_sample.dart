@@ -192,6 +192,7 @@ class HorizontalEqualSpaceExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // padding: EdgeInsets.only(top: 10),
+      height: 50,
       color: Colors.grey,
       child: Row(
         children: [
@@ -199,21 +200,11 @@ class HorizontalEqualSpaceExample extends StatelessWidget {
             // flex: 1,
             child: Container(
                 // margin: EdgeInsets.only(left: 10),
-                height: 50,
                 color: Colors.blue),
           ),
           Flexible(
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.green,
-                  child: Text('green'),
-                ),
-                Container(
-                  color: Colors.green,
-                  child: Text('green'),
-                ),
-              ],
+            child: Container(
+              color: Colors.green,
             ),
           ),
         ],

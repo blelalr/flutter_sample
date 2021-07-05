@@ -82,10 +82,12 @@ class ThemeSample extends StatelessWidget {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Container(height: 100, color: Theme.of(context).primaryColor),
+                  Container(height: 16, color: Theme.of(context).primaryColor),
                 ],
               ),
             ),
+            SliverToBoxAdapter(child: SortFrame()),
+            ProfileVideosFrame()
           ],
         ));
   }
@@ -658,5 +660,81 @@ class BuildProfileTaskView extends StatelessWidget {
     } else {
       return [];
     }
+  }
+}
+
+class SortFrame extends StatelessWidget {
+  const SortFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => {print('Sort by Relevance click! ')},
+      behavior:
+          HitTestBehavior.translucent, //add this to fix click on translucent
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/icon/icon_colse.svg',
+                color: Theme.of(context).hintColor, width: 24, height: 24),
+            SizedBox(width: 4),
+            Flexible(
+              child: Text(
+                  'Sort by RelevanceSort by Relevance\nSort by RelevanceSort by Relevance\nSort by Relevance',
+                  style: AppFonts.button()),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileVideosFrame extends StatelessWidget {
+  const ProfileVideosFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverGrid.extent(
+        childAspectRatio: 2 / 3, //w:h,
+        maxCrossAxisExtent: 188,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
+        children: getVideoData().map((item) => VideoItem(item: item)).toList());
+  }
+}
+
+List<String> getVideoData() {
+  return [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+  ];
+}
+
+class VideoItem extends StatelessWidget {
+  final String item;
+
+  const VideoItem({Key? key, required this.item}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.amber,
+      child: Center(
+          child: Text(
+        '$item',
+        style: AppFonts.subTitle(),
+      )),
+    );
   }
 }
