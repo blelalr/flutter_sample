@@ -82,8 +82,7 @@ class ThemeSample extends StatelessWidget {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  Container(height: 200, color: Colors.green),
-                  Container(height: 200, color: Colors.pink),
+                  Container(height: 100, color: Theme.of(context).primaryColor),
                 ],
               ),
             ),
@@ -538,10 +537,9 @@ class ProfileTaskFrame extends StatelessWidget {
   }
 }
 
-class CompleteProfileItem extends StatelessWidget {
+class ProfileTaskItem extends StatelessWidget {
   final ProfileTaskModel profileTaskModel;
-  const CompleteProfileItem(this.profileTaskModel, {Key? key})
-      : super(key: key);
+  const ProfileTaskItem(this.profileTaskModel, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -647,7 +645,7 @@ class BuildProfileTaskView extends StatelessWidget {
                 children: List.generate(
                     updateProfileTask(state).length,
                     (index) =>
-                        CompleteProfileItem(updateProfileTask(state)[index])),
+                        ProfileTaskItem(updateProfileTask(state)[index])),
               );
             },
           ),
