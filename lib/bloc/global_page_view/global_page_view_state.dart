@@ -23,12 +23,10 @@ class GlobalPageViewLoadMore extends GlobalPageViewState {
   // }
 }
 
-class GlobalPageViewRightLoading extends GlobalPageViewState {}
-
 class GlobalPageViewLoaded extends GlobalPageViewState {
-  GlobalPageViewLoaded({
-    this.globalList = const <Post>[],
-  });
+  GlobalPageViewLoaded({this.globalList = const <Post>[], this.movePosition});
+
+  final int? movePosition;
 
   final List<Post> globalList;
 

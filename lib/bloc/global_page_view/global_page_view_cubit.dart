@@ -19,7 +19,6 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
         emit(GlobalPageViewLoading());
         final posts = await PostService.getPosts(0);
         Timer(Duration(seconds: 3), () {
-          print("Delay 3 seconds");
           emit(GlobalPageViewLoaded(globalList: posts));
         });
       }
@@ -28,7 +27,7 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
     }
   }
 
-  void loadMoreLeft() async {
+  void loadMore(int index) async {
     try {
       if (state is GlobalPageViewLoaded) {
         final totalList = List.of((state as GlobalPageViewLoaded).globalList);
@@ -36,49 +35,39 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
           Post(id: -1, userId: -1, title: 'title', body: 'body'),
           Post(id: -1, userId: -1, title: 'title', body: 'body')
         ];
-        fake.addAll(totalList);
-        emit(GlobalPageViewLoadMore(fakeLoadingList: fake));
 
-        print('LoadLeft');
-
+        if (index == 0) {
+          fake.addAll(totalList);
+          emit(GlobalPageViewLoadMore(fakeLoadingList: fake));
+          print('LoadLeft');
+        } else {
+          List<Post> temp = [];
+          temp.addAll(totalList);
+          temp.addAll(fake);
+          emit(GlobalPageViewLoadMore(fakeLoadingList: temp));
+          print('LoadRight');
+        }
         final morePosts = await PostService.getPosts(totalList.length);
-        List<Post> loadMoreList = [];
 
-        loadMoreList.addAll(morePosts);
-        loadMoreList.addAll(totalList);
-        Timer(Duration(seconds: 3), () {
-          print("Delay 3 seconds");
-          emit(GlobalPageViewLoaded(globalList: loadMoreList));
-        });
-      }
-    } on Exception {
-      emit(GlobalPageViewFail());
-    }
-  }
-
-  void loadMoreRight() async {
-    try {
-      if (state is GlobalPageViewLoaded) {
-        final totalList = List.of((state as GlobalPageViewLoaded).globalList);
-        List<Post> temp = [];
-        temp.addAll(totalList);
-        List<Post> fake = [
-          Post(id: -1, userId: -1, title: 'title', body: 'body'),
-          Post(id: -1, userId: -1, title: 'title', body: 'body')
-        ];
-        temp.addAll(fake);
-        emit(GlobalPageViewLoadMore(fakeLoadingList: temp));
-        print('$totalList');
-        print('$temp');
-        final morePosts = await PostService.getPosts(totalList.length);
-        List<Post> loadMoreList = [];
-
-        loadMoreList.addAll(totalList);
-        loadMoreList.addAll(morePosts);
-        Timer(Duration(seconds: 3), () {
-          print("Delay 3 seconds");
-          emit(GlobalPageViewLoaded(globalList: loadMoreList));
-        });
+        if (index == 0) {
+          List<Post> loadMoreList = [];
+          loadMoreList.addAll(morePosts);
+          loadMoreList.addAll(totalList);
+          Timer(Duration(seconds: 3), () {
+            emit(GlobalPageViewLoaded(
+                globalList: loadMoreList, movePosition: PostService.postLimit));
+          });
+        } else {
+          List<Post> loadMoreList = [];
+          loadMoreList.addAll(totalList);
+          loadMoreList.addAll(morePosts);
+          Timer(Duration(seconds: 3), () {
+            emit(GlobalPageViewLoaded(
+                globalList: loadMoreList,
+                movePosition:
+                    (loadMoreList.length - 1) - PostService.postLimit));
+          });
+        }
       }
     } on Exception {
       emit(GlobalPageViewFail());

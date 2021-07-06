@@ -41,27 +41,28 @@ class _GlobalPageViewState extends State<GlobalPageView> {
       alignment: Alignment.bottomCenter,
       children: [
         Container(
-          height: 65,
+          height: 70,
           child: BlocConsumer<GlobalPageViewCubit, GlobalPageViewState>(
             listener: (context, state) {
               if (state is GlobalPageViewLoaded) {
                 _itemCount = state.globalList.length;
+                controller.animateToPage(state.movePosition ?? 2,
+                    duration: Duration(milliseconds: 1),
+                    curve: Curves.bounceIn);
               } else if (state is GlobalPageViewLoadMore) {
                 _itemCount = state.fakeLoadingList.length;
-              } else if (state is GlobalPageViewLoaded) {
-                // _currentPosition =
               }
             },
             builder: (context, state) {
               return PageView.builder(
                   onPageChanged: (value) {
+                    if (value == 0 || value == _itemCount - 1)
+                      context.read<GlobalPageViewCubit>().loadMore(value);
                     if (value == 0) {
-                      context.read<GlobalPageViewCubit>().loadMoreLeft();
                       controller.animateToPage(2,
                           duration: Duration(milliseconds: 1),
                           curve: Curves.bounceIn);
                     } else if (value == _itemCount - 1) {
-                      context.read<GlobalPageViewCubit>().loadMoreRight();
                       controller.animateToPage(_itemCount - 1,
                           duration: Duration(milliseconds: 1),
                           curve: Curves.bounceIn);
