@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/bloc/global_page_view/global_page_view_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sample/page/infinite/post.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 class GlobalPageView extends StatefulWidget {
   @override
@@ -6,17 +10,16 @@ class GlobalPageView extends StatefulWidget {
 }
 
 class _GlobalPageViewState extends State<GlobalPageView> {
-  late PageController controller;
   int currentPage = 0;
+  final PageController controller = PageController(
+    initialPage: 0,
+    keepPage: false,
+    viewportFraction: 0.2,
+  );
 
   @override
   initState() {
     super.initState();
-    controller = PageController(
-      initialPage: currentPage,
-      keepPage: false,
-      viewportFraction: 0.2,
-    );
     Future.delayed(const Duration(milliseconds: 20), () {
       setState(() {
         controller.animateToPage(2,
@@ -33,19 +36,42 @@ class _GlobalPageViewState extends State<GlobalPageView> {
 
   @override
   Widget build(BuildContext context) {
+    int _itemCount = 5;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Container(
           height: 65,
-          child: PageView.builder(
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
-              controller: controller,
-              itemBuilder: (context, index) => builder(index)),
+          child: BlocConsumer<GlobalPageViewCubit, GlobalPageViewState>(
+            listener: (context, state) {
+              if (state is GlobalPageViewLoaded) {
+                _itemCount = state.globalList.length;
+              } else if (state is GlobalPageViewLoadMore) {
+                _itemCount = state.fakeLoadingList.length;
+              } else if (state is GlobalPageViewLoaded) {
+                // _currentPosition =
+              }
+            },
+            builder: (context, state) {
+              return PageView.builder(
+                  onPageChanged: (value) {
+                    if (value == 0) {
+                      context.read<GlobalPageViewCubit>().loadMoreLeft();
+                      controller.animateToPage(2,
+                          duration: Duration(milliseconds: 1),
+                          curve: Curves.bounceIn);
+                    } else if (value == _itemCount - 1) {
+                      context.read<GlobalPageViewCubit>().loadMoreRight();
+                      controller.animateToPage(_itemCount - 1,
+                          duration: Duration(milliseconds: 1),
+                          curve: Curves.bounceIn);
+                    }
+                  },
+                  controller: controller,
+                  itemCount: _itemCount,
+                  itemBuilder: (context, index) => builder(index, state));
+            },
+          ),
         ),
         Container(
             width: 64,
@@ -58,7 +84,7 @@ class _GlobalPageViewState extends State<GlobalPageView> {
     );
   }
 
-  builder(int index) {
+  builder(int index, GlobalPageViewState state) {
     return AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
@@ -73,15 +99,41 @@ class _GlobalPageViewState extends State<GlobalPageView> {
                 height: Curves.easeOut.transform(value) * 64,
                 width: Curves.easeOut.transform(value) * 64,
                 child: Card(
-                  elevation: 2,
-                  clipBehavior: Clip.antiAlias,
-                  shape: CircleBorder(
-                      side: BorderSide(color: Colors.grey.shade200, width: 2)),
-                  child: Container(
-                      color: Colors.primaries[index % 17],
-                      child: Center(child: Text('$value'))),
-                ),
+                    elevation: 2,
+                    clipBehavior: Clip.antiAlias,
+                    shape: CircleBorder(
+                        side:
+                            BorderSide(color: Colors.grey.shade200, width: 2)),
+                    child: loadByState(state, index)),
               ));
         });
+  }
+
+  Widget loadByState(GlobalPageViewState state, int index) {
+    if (state is GlobalPageViewLoading) {
+      return Shimmer(
+        duration: Duration(milliseconds: 1500),
+        enabled: true,
+        child: Container(color: Colors.black45),
+      );
+    } else if (state is GlobalPageViewLoadMore) {
+      List<Post> fakeList = state.fakeLoadingList;
+      return Shimmer(
+        duration: Duration(milliseconds: 1500),
+        enabled: (fakeList[index].id == -1),
+        child: (fakeList[index].id == -1)
+            ? Container(color: Colors.black45)
+            : Container(
+                color: Colors.primaries[index % 17],
+                child: Center(child: Text('${fakeList[index].id}'))),
+      );
+    } else if (state is GlobalPageViewLoaded) {
+      List<Post> list = state.globalList;
+      return Container(
+          color: Colors.primaries[index % 17],
+          child: Center(child: Text('${list[index].id}')));
+    } else {
+      return Container(color: Colors.black45);
+    }
   }
 }

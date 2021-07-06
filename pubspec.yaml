@@ -36,6 +36,7 @@ dependencies:
   google_maps_flutter: ^2.0.6
   url_launcher: ^6.0.0
   shared_preferences: ^2.0.6
+  shimmer_animation: ^2.1.0+1
 
 
 dev_dependencies:
