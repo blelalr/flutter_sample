@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CarouselView extends StatefulWidget {
+class GlobalPageView extends StatefulWidget {
   @override
-  _CarouselViewState createState() => new _CarouselViewState();
+  _GlobalPageViewState createState() => new _GlobalPageViewState();
 }
 
-class _CarouselViewState extends State<CarouselView> {
+class _GlobalPageViewState extends State<GlobalPageView> {
   late PageController controller;
   int currentPage = 0;
 
@@ -33,35 +33,28 @@ class _CarouselViewState extends State<CarouselView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 65,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              color: Colors.pink,
-              width: double.infinity,
-              child: PageView.builder(
-                  onPageChanged: (value) {
-                    setState(() {
-                      currentPage = value;
-                    });
-                  },
-                  controller: controller,
-                  itemBuilder: (context, index) => builder(index)),
-            ),
-          ),
-          Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 2),
-                borderRadius: BorderRadius.circular(64.0),
-              )),
-        ],
-      ),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Container(
+          height: 65,
+          child: PageView.builder(
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              controller: controller,
+              itemBuilder: (context, index) => builder(index)),
+        ),
+        Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white, width: 2),
+              borderRadius: BorderRadius.circular(50.0),
+            )),
+      ],
     );
   }
 
@@ -74,15 +67,13 @@ class _CarouselViewState extends State<CarouselView> {
             value = (controller.page ?? 0) - index;
             value = (1 - (value.abs() * 0.25)).clamp(0.5, 1);
           }
-
           return Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                color: Colors.green,
                 height: Curves.easeOut.transform(value) * 64,
                 width: Curves.easeOut.transform(value) * 64,
                 child: Card(
-                  elevation: 4,
+                  elevation: 2,
                   clipBehavior: Clip.antiAlias,
                   shape: CircleBorder(
                       side: BorderSide(color: Colors.grey.shade200, width: 2)),

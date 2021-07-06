@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_sample/bloc/complete_profile/profile_task_cubit.dart';
+import 'package:flutter_sample/bloc/profile_task/profile_task_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/custom_widget/button_small_outlined.dart';
 import 'package:flutter_sample/custom_widget/button_small.dart';

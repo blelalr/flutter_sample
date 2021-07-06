@@ -36,4 +36,10 @@ class AppColors {
 
   static const innerBorderLight = Color(0x4D284650);
   static const innerBorderDark = Color(0x4DE8F9FC);
+
+  static const maskGradientBlack20 = Color(0x33000000);
+  static const maskGradientWhite20 = Color(0x33FFFFFF);
+
+  static const glassIos_20blurLight = Color(0xBFF7F9FA);
+  static const glassIos_20blurDark = Color(0xBF454A4A);
 }

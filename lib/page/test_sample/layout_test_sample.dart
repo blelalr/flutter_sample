@@ -7,7 +7,7 @@ import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
 import 'package:flutter_sample/model/suggestion_model.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
-import 'package:flutter_sample/page/test_sample/carousel_view.dart';
+import 'package:flutter_sample/page/test_sample/global_page_view.dart';
 import 'package:flutter_sample/page/test_sample/scale_page_view.dart';
 
 class LayoutTestSample extends StatelessWidget {
@@ -45,7 +45,7 @@ class LayoutTestSample extends StatelessWidget {
               Divider(),
               ScalePageView(),
               Divider(),
-              CarouselView(),
+              GlobalPageView(),
               Divider(),
               FullWidthExample(),
               Divider(),
