@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sample/bloc/global_page_view/global_page_view_cubit.dart';
 import 'package:flutter_sample/custom_widget/button_large.dart';
 import 'package:flutter_sample/custom_widget/button_small.dart';
 import 'package:flutter_sample/custom_widget/suggestion_card.dart';
@@ -15,58 +17,62 @@ class LayoutTestSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Layout Test Sample'),
-          actions: [SwitchThemeWidget()],
-        ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextStyle(),
-              Divider(),
-              Container(
-                width: double.infinity,
-                color: Colors.grey,
-                child: Center(
-                  child: SuggestionCard(
-                      suggestionModel: SuggestionModel(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
-                          'nickName',
-                          'account',
-                          TYPE.normal,
-                          false)),
-                ),
-              ),
-              Divider(),
-              CustomButton(),
-              Divider(),
-              ScalePageView(),
-              Divider(),
-              GlobalPageView(),
-              Divider(),
-              FullWidthExample(),
-              Divider(),
-              PaddingExample(),
-              Divider(),
-              ContainerPaddingExample(),
-              Divider(),
-              AspectRatioImageExample(),
-              Divider(),
-              ContentExample(),
-              Divider(),
-              VerticalEqualSpaceExample(),
-              Divider(),
-              HorizontalEqualSpaceExample(),
-              Divider(),
-              HorizontalFlexSpaceExample(),
-              Divider(),
-              RemainSpaceExample(),
-            ],
+    return BlocProvider(
+      create: (context) =>
+          GlobalPageViewCubit()..fetchGlobalList(), //add for Global Page View
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Layout Test Sample'),
+            actions: [SwitchThemeWidget()],
           ),
-        ));
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextStyle(),
+                Divider(),
+                Container(
+                  width: double.infinity,
+                  color: Colors.grey,
+                  child: Center(
+                    child: SuggestionCard(
+                        suggestionModel: SuggestionModel(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
+                            'nickName',
+                            'account',
+                            TYPE.normal,
+                            false)),
+                  ),
+                ),
+                Divider(),
+                CustomButton(),
+                Divider(),
+                ScalePageView(),
+                Divider(),
+                GlobalPageView(),
+                Divider(),
+                FullWidthExample(),
+                Divider(),
+                PaddingExample(),
+                Divider(),
+                ContainerPaddingExample(),
+                Divider(),
+                AspectRatioImageExample(),
+                Divider(),
+                ContentExample(),
+                Divider(),
+                VerticalEqualSpaceExample(),
+                Divider(),
+                HorizontalEqualSpaceExample(),
+                Divider(),
+                HorizontalFlexSpaceExample(),
+                Divider(),
+                RemainSpaceExample(),
+              ],
+            ),
+          )),
+    );
   }
 }
 
