@@ -8,29 +8,29 @@ import 'package:flutter_sample/page/home/place.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
-part 'global_page_view_state.dart';
+part 'global_state.dart';
 
-class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
-  GlobalPageViewCubit() : super(GlobalPageViewInitial());
+class GlobalCubit extends Cubit<GlobalState> {
+  GlobalCubit() : super(GlobalInitial());
 
   void fetchGlobalList() async {
     try {
-      if (state is GlobalPageViewInitial) {
-        emit(GlobalPageViewLoading());
+      if (state is GlobalInitial) {
+        emit(GlobalLoading());
         final posts = await PostService.getPosts(0);
         Timer(Duration(seconds: 3), () {
-          emit(GlobalPageViewLoaded(globalList: posts));
+          emit(GlobalLoaded(globalList: posts));
         });
       }
     } on Exception {
-      emit(GlobalPageViewFail());
+      emit(GlobalFail());
     }
   }
 
   void loadMore(int index) async {
     try {
-      if (state is GlobalPageViewLoaded) {
-        final totalList = List.of((state as GlobalPageViewLoaded).globalList);
+      if (state is GlobalLoaded) {
+        final totalList = List.of((state as GlobalLoaded).globalList);
         List<Post> fake = [
           Post(id: -1, userId: -1, title: 'title', body: 'body'),
           Post(id: -1, userId: -1, title: 'title', body: 'body')
@@ -38,13 +38,13 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
 
         if (index == 0) {
           fake.addAll(totalList);
-          emit(GlobalPageViewLoadMore(fakeLoadingList: fake));
+          emit(GlobalLoadMore(fakeLoadingList: fake));
           print('LoadLeft');
         } else {
           List<Post> temp = [];
           temp.addAll(totalList);
           temp.addAll(fake);
-          emit(GlobalPageViewLoadMore(fakeLoadingList: temp));
+          emit(GlobalLoadMore(fakeLoadingList: temp));
           print('LoadRight');
         }
         final morePosts = await PostService.getPosts(totalList.length);
@@ -54,7 +54,7 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
           loadMoreList.addAll(morePosts);
           loadMoreList.addAll(totalList);
           Timer(Duration(seconds: 3), () {
-            emit(GlobalPageViewLoaded(
+            emit(GlobalLoaded(
                 globalList: loadMoreList, movePosition: PostService.postLimit));
           });
         } else {
@@ -62,7 +62,7 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
           loadMoreList.addAll(totalList);
           loadMoreList.addAll(morePosts);
           Timer(Duration(seconds: 3), () {
-            emit(GlobalPageViewLoaded(
+            emit(GlobalLoaded(
                 globalList: loadMoreList,
                 movePosition:
                     (loadMoreList.length - 1) - PostService.postLimit));
@@ -70,7 +70,7 @@ class GlobalPageViewCubit extends Cubit<GlobalPageViewState> {
         }
       }
     } on Exception {
-      emit(GlobalPageViewFail());
+      emit(GlobalFail());
     }
   }
 

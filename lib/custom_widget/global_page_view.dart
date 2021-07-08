@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/bloc/global_page_view/global_page_view_cubit.dart';
+import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/page/infinite/post.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -37,15 +37,15 @@ class _GlobalPageViewState extends State<GlobalPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<GlobalPageViewCubit, GlobalPageViewState>(
+    return BlocListener<GlobalCubit, GlobalState>(
       listener: (context, state) {
-        if (state is GlobalPageViewLoaded) {
+        if (state is GlobalLoaded) {
           setState(() {
             _itemCount = state.globalList.length;
           });
           controller.animateToPage(state.movePosition ?? 2,
               duration: Duration(milliseconds: 100), curve: Curves.decelerate);
-        } else if (state is GlobalPageViewLoadMore) {
+        } else if (state is GlobalLoadMore) {
           setState(() {
             _itemCount = state.fakeLoadingList.length;
           });
@@ -59,7 +59,7 @@ class _GlobalPageViewState extends State<GlobalPageView> {
               child: PageView.builder(
                   onPageChanged: (value) {
                     if (value == 0 || value == _itemCount - 1)
-                      context.read<GlobalPageViewCubit>().loadMore(value);
+                      context.read<GlobalCubit>().loadMore(value);
                     if (value == 0) {
                       controller.animateToPage(2,
                           duration: Duration(milliseconds: 100),
@@ -121,15 +121,15 @@ class GlobalBall extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         shape: CircleBorder(
             side: BorderSide(color: Colors.grey.shade200, width: 2)),
-        child: BlocBuilder<GlobalPageViewCubit, GlobalPageViewState>(
+        child: BlocBuilder<GlobalCubit, GlobalState>(
           builder: (context, state) {
-            if (state is GlobalPageViewLoading) {
+            if (state is GlobalLoading) {
               return Shimmer(
                 duration: Duration(seconds: 2),
                 enabled: true,
                 child: Container(color: Colors.black45),
               );
-            } else if (state is GlobalPageViewLoadMore) {
+            } else if (state is GlobalLoadMore) {
               List<Post> fakeList = state.fakeLoadingList;
               return Shimmer(
                 duration: Duration(seconds: 2),
@@ -140,7 +140,7 @@ class GlobalBall extends StatelessWidget {
                         color: Colors.yellow, //Colors.primaries[index % 17],
                         child: Center(child: Text('${fakeList[_index].id}'))),
               );
-            } else if (state is GlobalPageViewLoaded) {
+            } else if (state is GlobalLoaded) {
               List<Post> list = state.globalList;
               return Container(
                   color: Colors.yellow,

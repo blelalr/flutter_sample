@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/bloc/global_page_view/global_page_view_cubit.dart';
+import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_sample/custom_widget/button_large.dart';
 import 'package:flutter_sample/custom_widget/button_small.dart';
 import 'package:flutter_sample/custom_widget/suggestion_card.dart';
@@ -19,7 +19,7 @@ class LayoutTestSample extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          GlobalPageViewCubit()..fetchGlobalList(), //add for Global Page View
+          GlobalCubit()..fetchGlobalList(), //add for Global Page View
       child: Scaffold(
           appBar: AppBar(
             title: Text('Layout Test Sample'),

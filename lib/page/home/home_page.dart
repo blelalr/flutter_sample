@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/bloc/global_page_view/global_page_view_cubit.dart';
+import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/custom_widget/icon_button_default.dart';
 import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
@@ -46,7 +46,7 @@ class _MapPageState extends State<MapPage> {
       changeMapMode(themeBloc.isDarkMode);
     }
     return BlocProvider(
-      create: (context) => GlobalPageViewCubit()..fetchGlobalList(),
+      create: (context) => GlobalCubit()..fetchGlobalList(),
       child: Material(
         child: Stack(children: [
           Positioned.fill(
