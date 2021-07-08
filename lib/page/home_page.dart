@@ -8,64 +8,75 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.STATE_MANAGEMENT);
-            },
-            child: const Text('State Management'),
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance.navigateToPage(
+                      path: NavigationConstants.STATE_MANAGEMENT);
+                },
+                child: const Text('State Management'),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance
+                      .navigateToPage(path: NavigationConstants.INFINITE);
+                },
+                child: const Text('Bloc/Cubit Infinite List'),
+              ),
+              // const SizedBox(height: 30),
+              // ElevatedButton(
+              //   onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.VIDEO_SCROLL); },
+              //   child: const Text('Video Scroll'),
+              // ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance
+                      .navigateToPage(path: NavigationConstants.LAYOUT_TEST);
+                },
+                child: const Text('Layout Test'),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance
+                      .navigateToPage(path: NavigationConstants.DIALOG);
+                },
+                child: const Text('Dialog'),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance
+                      .navigateToPage(path: NavigationConstants.HOME);
+                },
+                child: const Text('Home'),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance
+                      .navigateToPage(path: NavigationConstants.PROFILE);
+                },
+                child: const Text('Profile'),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  NavigationService.instance
+                      .navigateToPage(path: NavigationConstants.SEARCH);
+                },
+                child: const Text('Search'),
+              ),
+              const SizedBox(height: 30),
+            ],
           ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.INFINITE);
-            },
-            child: const Text('Bloc/Cubit Infinite List'),
-          ),
-          // const SizedBox(height: 30),
-          // ElevatedButton(
-          //   onPressed: () { NavigationService.instance.navigateToPage(path: NavigationConstants.VIDEO_SCROLL); },
-          //   child: const Text('Video Scroll'),
-          // ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.MAP_SAMPLE);
-            },
-            child: const Text('Map Sample'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.TEST_SAMPLE);
-            },
-            child: const Text('Layout Sample'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.DIALOG_SAMPLE);
-            },
-            child: const Text('Dialog Sample'),
-          ),
-          const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.THEME_SAMPLE);
-            },
-            child: const Text('Custom Component'),
-          )
-        ],
-      ),
-    ));
+        ));
   }
 }

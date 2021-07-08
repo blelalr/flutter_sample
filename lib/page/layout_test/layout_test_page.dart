@@ -7,10 +7,10 @@ import 'package:flutter_sample/custom_widget/suggestion_card.dart';
 import 'package:flutter_sample/custom_widget/icon_button_default.dart';
 import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
 import 'package:flutter_sample/model/suggestion_model.dart';
+import 'package:flutter_sample/page/layout_test/scale_page_view.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
-import 'package:flutter_sample/page/test_sample/global_page_view.dart';
-import 'package:flutter_sample/page/test_sample/scale_page_view.dart';
+import 'package:flutter_sample/custom_widget/global_page_view.dart';
 
 class LayoutTestSample extends StatelessWidget {
   LayoutTestSample({Key? key}) : super(key: key);

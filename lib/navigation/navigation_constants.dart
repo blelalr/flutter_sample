@@ -9,13 +9,15 @@ class NavigationConstants {
   static const INFINITE_BLOC = '/infinite/infiniteBloc';
   static const INFINITE_CUBIT = '/infinite/infiniteCubit';
 
-  static const TEST_SAMPLE = '/testSample';
+  static const LAYOUT_TEST = '/layoutTest';
+
+  static const DIALOG = '/dialog';
 
   static const VIDEO_SCROLL = '/videoScroll';
 
-  static const MAP_SAMPLE = '/mapSample';
+  static const HOME = '/home';
 
-  static const DIALOG_SAMPLE = '/dialogSample';
+  static const PROFILE = '/profile';
 
-  static const THEME_SAMPLE = '/themeSample';
+  static const SEARCH = '/themeSample';
 }

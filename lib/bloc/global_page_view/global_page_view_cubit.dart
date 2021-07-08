@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/page/infinite/post.dart';
 import 'package:flutter_sample/page/infinite/post_service.dart';
-import 'package:flutter_sample/page/map_sample/cluster_item.dart';
-import 'package:flutter_sample/page/map_sample/place.dart';
+import 'package:flutter_sample/page/home/cluster_item.dart';
+import 'package:flutter_sample/page/home/place.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 

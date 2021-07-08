@@ -3,7 +3,7 @@ import 'package:flutter_sample/bloc/global_page_view/global_page_view_cubit.dart
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/custom_widget/icon_button_default.dart';
 import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
-import 'package:flutter_sample/page/test_sample/global_page_view.dart';
+import 'package:flutter_sample/custom_widget/global_page_view.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';

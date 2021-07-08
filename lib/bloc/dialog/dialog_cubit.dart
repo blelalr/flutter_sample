@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_sample/page/dialog_sample/dialog_component.dart';
+import 'package:flutter_sample/page/dialog/dialog_component.dart';
 import 'package:meta/meta.dart';
 
 part 'dialog_state.dart';

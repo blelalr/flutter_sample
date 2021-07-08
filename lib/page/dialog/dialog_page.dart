@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/page/dialog_sample/dialog_component.dart';
+import 'package:flutter_sample/page/dialog/dialog_component.dart';
 import 'package:flutter_sample/bloc/dialog/dialog_cubit.dart';
-import 'package:flutter_sample/page/dialog_sample/dialog_manager.dart';
+import 'package:flutter_sample/page/dialog/dialog_manager.dart';
 
 class DialogPage extends StatelessWidget {
   const DialogPage({Key? key}) : super(key: key);
