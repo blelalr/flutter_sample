@@ -42,4 +42,7 @@ class AppColors {
 
   static const glassIos_20blurLight = Color(0xBFF7F9FA);
   static const glassIos_20blurDark = Color(0xBF454A4A);
+
+  static const floatingLight = Color(0xFFFFFFFF);
+  static const floatingDark = Color(0xFF454A4A);
 }

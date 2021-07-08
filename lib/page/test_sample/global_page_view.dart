@@ -62,11 +62,11 @@ class _GlobalPageViewState extends State<GlobalPageView> {
                       context.read<GlobalPageViewCubit>().loadMore(value);
                     if (value == 0) {
                       controller.animateToPage(2,
-                          duration: Duration(milliseconds: 1),
+                          duration: Duration(milliseconds: 100),
                           curve: Curves.decelerate);
                     } else if (value == _itemCount - 1) {
                       controller.animateToPage(_itemCount - 1,
-                          duration: Duration(milliseconds: 1),
+                          duration: Duration(milliseconds: 100),
                           curve: Curves.decelerate);
                     }
                   },
@@ -76,8 +76,8 @@ class _GlobalPageViewState extends State<GlobalPageView> {
                     return builder(index);
                   })),
           Container(
-              width: 64,
-              height: 64,
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.white, width: 2),
                 borderRadius: BorderRadius.circular(50.0),
@@ -99,8 +99,8 @@ class _GlobalPageViewState extends State<GlobalPageView> {
         return Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
-            height: Curves.easeOut.transform(value) * 64,
-            width: Curves.easeOut.transform(value) * 64,
+            height: Curves.easeOut.transform(value) * 60,
+            width: Curves.easeOut.transform(value) * 60,
             child: child,
           ),
         );
