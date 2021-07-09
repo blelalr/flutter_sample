@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sample/component/button_small_outlined.dart';
 import 'package:flutter_sample/component/button_small.dart';
 import 'package:flutter_sample/model/suggestion.dart';
-import 'package:flutter_sample/style/app_fonts.dart';
+import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SuggestionCard extends StatelessWidget {

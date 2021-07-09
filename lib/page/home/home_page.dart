@@ -4,8 +4,8 @@ import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/component/icon_button_default.dart';
 import 'package:flutter_sample/component/switch_theme_widget.dart';
 import 'package:flutter_sample/component/global_page_view.dart';
-import 'package:flutter_sample/style/app_colors.dart';
-import 'package:flutter_sample/style/app_fonts.dart';
+import 'package:flutter_sample/res/app_colors.dart';
+import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -193,12 +193,6 @@ class MaskGradientBlack20 extends StatelessWidget {
                 0.7,
                 1
               ],
-              // colors: [
-              //   Colors.green,
-              //   Colors.transparent,
-              //   Colors.transparent,
-              //   Colors.green,
-              // ]),
               colors: [
                 AppColors.maskGradientBlack20,
                 Colors.transparent,
@@ -233,12 +227,6 @@ class MaskGradientWhite20 extends StatelessWidget {
                 0.7,
                 1
               ],
-              // colors: [
-              //   Colors.yellow,
-              //   Colors.transparent,
-              //   Colors.transparent,
-              //   Colors.yellow,
-              // ]),
               colors: [
                 AppColors.maskGradientWhite20,
                 Colors.transparent,

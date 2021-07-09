@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/style/app_fonts.dart';
+import 'package:flutter_sample/res/app_fonts.dart';
 
 class ButtonSmall extends StatelessWidget {
   final String text;

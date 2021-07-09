@@ -8,8 +8,8 @@ import 'package:flutter_sample/component/icon_button_default.dart';
 import 'package:flutter_sample/component/switch_theme_widget.dart';
 import 'package:flutter_sample/model/suggestion.dart';
 import 'package:flutter_sample/page/layout_test/scale_page_view.dart';
-import 'package:flutter_sample/style/app_colors.dart';
-import 'package:flutter_sample/style/app_fonts.dart';
+import 'package:flutter_sample/res/app_colors.dart';
+import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_sample/component/global_page_view.dart';
 
 class LayoutTestSample extends StatelessWidget {

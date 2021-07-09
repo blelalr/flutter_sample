@@ -5,7 +5,7 @@ import 'package:flutter_sample/navigation/navigation_route.dart';
 import 'package:flutter_sample/navigation/navigation_service.dart';
 import 'package:flutter_sample/bloc/dialog/dialog_cubit.dart';
 import 'package:flutter_sample/page/home_page.dart';
-import 'package:flutter_sample/style/app_themes.dart';
+import 'package:flutter_sample/res/app_themes.dart';
 import 'bloc/theme/theme_cubit.dart';
 
 void main() {

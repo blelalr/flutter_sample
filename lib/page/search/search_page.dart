@@ -12,7 +12,7 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PhotoCubit>(
       create: (context) => PhotoCubit()..fetchPhoto(),
-      child: Scaffold(body: SearchPageView()),
+      child: Scaffold(appBar: AppBar(), body: SearchPageView()),
     );
   }
 }

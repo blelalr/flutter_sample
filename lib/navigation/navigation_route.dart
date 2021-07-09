@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_sample/navigation/transitions/fade_route.dart';
 import 'package:flutter_sample/page/dialog/dialog_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_bloc/infinite_list_bloc_page.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_cubit/infinite_list_cubit_page.dart';
@@ -23,8 +24,8 @@ class NavigationRoute {
 
   NavigationRoute._init();
 
-  Route<dynamic> generateRoute(RouteSettings args) {
-    switch (args.name) {
+  Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
       case NavigationConstants.STATE_MANAGEMENT:
         return normalNavigate(StateManagementPage());
       case NavigationConstants.SET_STATE:
@@ -64,5 +65,9 @@ class NavigationRoute {
     return MaterialPageRoute(
       builder: (context) => widget,
     );
+  }
+
+  PageRoute navigateToFadeDefault(Widget page, RouteSettings settings) {
+    return FadeRoute(page: page, settings: settings);
   }
 }

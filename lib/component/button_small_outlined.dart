@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_sample/style/app_fonts.dart';
+import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ButtonSmallOutlined extends StatelessWidget {
