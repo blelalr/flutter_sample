@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/bloc/global/global_cubit.dart';
-import 'package:flutter_sample/custom_widget/button_large.dart';
-import 'package:flutter_sample/custom_widget/button_small.dart';
-import 'package:flutter_sample/custom_widget/suggestion_card.dart';
-import 'package:flutter_sample/custom_widget/icon_button_default.dart';
-import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
-import 'package:flutter_sample/model/suggestion_model.dart';
+import 'package:flutter_sample/component/button_large.dart';
+import 'package:flutter_sample/component/button_small.dart';
+import 'package:flutter_sample/component/suggestion_card.dart';
+import 'package:flutter_sample/component/icon_button_default.dart';
+import 'package:flutter_sample/component/switch_theme_widget.dart';
+import 'package:flutter_sample/model/suggestion.dart';
 import 'package:flutter_sample/page/layout_test/scale_page_view.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
-import 'package:flutter_sample/custom_widget/global_page_view.dart';
+import 'package:flutter_sample/component/global_page_view.dart';
 
 class LayoutTestSample extends StatelessWidget {
   LayoutTestSample({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class LayoutTestSample extends StatelessWidget {
                   color: Colors.grey,
                   child: Center(
                     child: SuggestionCard(
-                        suggestionModel: SuggestionModel(
+                        suggestionModel: Suggestion(
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
                             'nickName',
                             'account',

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sample/component/bottom_loader.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_bloc/post_bloc.dart';
-import 'package:flutter_sample/page/infinite/post.dart';
+import 'package:flutter_sample/model/post.dart';
 
 class InfiniteListBlocPage extends StatelessWidget {
   const InfiniteListBlocPage({Key? key}) : super(key: key);
@@ -23,7 +24,6 @@ class PostListView extends StatefulWidget {
 
   @override
   _PostListViewState createState() => _PostListViewState();
-
 }
 
 class _PostListViewState extends State<PostListView> {
@@ -34,7 +34,7 @@ class _PostListViewState extends State<PostListView> {
     super.initState();
     _scrollController.addListener(_onScroll);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocListView(scrollController: _scrollController);
@@ -56,20 +56,6 @@ class _PostListViewState extends State<PostListView> {
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
   }
-
-}
-
-class BottomLoader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(strokeWidth: 1.5),
-      ),
-    );
-  }
 }
 
 class PostListItem extends StatelessWidget {
@@ -83,9 +69,9 @@ class PostListItem extends StatelessWidget {
     return Material(
       child: ListTile(
         leading: Text('${post.id}', style: textTheme.caption),
-        title: Text(post.title),
+        title: Text('${post.title}'),
         isThreeLine: true,
-        subtitle: Text(post.body),
+        subtitle: Text('${post.body}'),
         dense: true,
       ),
     );
@@ -93,7 +79,8 @@ class PostListItem extends StatelessWidget {
 }
 
 class BlocListView extends StatelessWidget {
-  const BlocListView({Key? key, required this.scrollController}) : super(key: key);
+  const BlocListView({Key? key, required this.scrollController})
+      : super(key: key);
   final ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
@@ -111,9 +98,8 @@ class BlocListView extends StatelessWidget {
                 ? BottomLoader()
                 : PostListItem(post: state.posts[index]);
           },
-          itemCount: state.hasReachedMax
-              ? state.posts.length
-              : state.posts.length + 1,
+          itemCount:
+              state.hasReachedMax ? state.posts.length : state.posts.length + 1,
           controller: scrollController,
         );
       default:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/page/infinite/post.dart';
+import 'package:flutter_sample/model/post.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 class GlobalPageView extends StatefulWidget {

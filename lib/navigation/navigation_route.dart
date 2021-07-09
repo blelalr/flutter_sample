@@ -7,6 +7,7 @@ import 'package:flutter_sample/page/infinite/infinite_page.dart';
 import 'package:flutter_sample/page/layout_test/layout_test_page.dart';
 import 'package:flutter_sample/page/home/home_page.dart';
 import 'package:flutter_sample/page/not_found_navigation_widget.dart';
+import 'package:flutter_sample/page/search/search_page.dart';
 import 'package:flutter_sample/page/state_management/bloc/bloc_page.dart';
 import 'package:flutter_sample/page/state_management/cubit/cubit_page.dart';
 import 'package:flutter_sample/page/state_management/provider/provider_page.dart';
@@ -49,7 +50,9 @@ class NavigationRoute {
       case NavigationConstants.DIALOG:
         return normalNavigate(DialogPage());
       case NavigationConstants.PROFILE:
-        return normalNavigate(ThemeSample());
+        return normalNavigate(ProfilePage());
+      case NavigationConstants.SEARCH:
+        return normalNavigate(SearchPage());
       default:
         return MaterialPageRoute(
           builder: (context) => NotFoundNavigationWidget(),

@@ -4,51 +4,51 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sample/bloc/profile_task/profile_task_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/custom_widget/button_small_outlined.dart';
-import 'package:flutter_sample/custom_widget/button_small.dart';
-import 'package:flutter_sample/custom_widget/suggestion_card.dart';
-import 'package:flutter_sample/custom_widget/icon_button_default.dart';
-import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
-import 'package:flutter_sample/custom_widget/text_see_more.dart';
-import 'package:flutter_sample/model/profile_task_model.dart';
-import 'package:flutter_sample/model/suggestion_model.dart';
+import 'package:flutter_sample/component/button_small_outlined.dart';
+import 'package:flutter_sample/component/button_small.dart';
+import 'package:flutter_sample/component/suggestion_card.dart';
+import 'package:flutter_sample/component/icon_button_default.dart';
+import 'package:flutter_sample/component/switch_theme_widget.dart';
+import 'package:flutter_sample/component/text_see_more.dart';
+import 'package:flutter_sample/model/profile_task.dart';
+import 'package:flutter_sample/model/suggestion.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ThemeSample extends StatelessWidget {
-  const ThemeSample({Key? key}) : super(key: key);
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var list = <SuggestionModel>[
-      SuggestionModel(
+    var list = <Suggestion>[
+      Suggestion(
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
           'nickName',
           'account',
           TYPE.normal,
           false),
-      SuggestionModel(
+      Suggestion(
           'https://www.liveabout.com/thmb/pVU4LPH5swXApRrz2hvskfWdTHE=/640x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/sp809_Something_Wall-Mart_This_Way_Comes_1-56a00a4f5f9b58eba4ae9a93.jpg',
           'nickName',
           'account',
           TYPE.normal,
           true),
-      SuggestionModel(
+      Suggestion(
           'https://www.liveabout.com/thmb/KPu6o0bmkKq2oGH9brQWolIf7IE=/479x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/tomandjerry-56a00b943df78cafda9fcac4.jpg',
           'nickName',
           'account',
           TYPE.verify,
           false),
-      SuggestionModel(
+      Suggestion(
           'https://www.liveabout.com/thmb/3mCctbAuSJsL1a9H2SzPDiYm0O8=/1367x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/powerpuff_girls-56a00bc45f9b58eba4aea61d.jpg',
           '#Dog',
           '1.2k Posts',
           TYPE.hashTag,
           true),
-      SuggestionModel(
+      Suggestion(
           'https://www.liveabout.com/thmb/9C-lNYu_kohW6x4393PbYOG_dYQ=/1200x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dexters_laboratory-56a010303df78cafda9fdf8b.jpg',
           '#Cat',
           '6k Posts',
@@ -422,7 +422,7 @@ class ButtonStackFrameNormalButton extends StatelessWidget {
 }
 
 class SuggestionFrame extends StatelessWidget {
-  final List<SuggestionModel> suggestionList;
+  final List<Suggestion> suggestionList;
   const SuggestionFrame({Key? key, required this.suggestionList})
       : super(key: key);
 
@@ -540,7 +540,7 @@ class ProfileTaskFrame extends StatelessWidget {
 }
 
 class ProfileTaskItem extends StatelessWidget {
-  final ProfileTaskModel profileTaskModel;
+  final ProfileTask profileTaskModel;
   const ProfileTaskItem(this.profileTaskModel, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -654,7 +654,7 @@ class BuildProfileTaskView extends StatelessWidget {
         ));
   }
 
-  List<ProfileTaskModel> updateProfileTask(ProfileTaskState state) {
+  List<ProfileTask> updateProfileTask(ProfileTaskState state) {
     if (state is ProfileTaskUpdate) {
       return state.profileTasks;
     } else {

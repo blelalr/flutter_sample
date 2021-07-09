@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/page/infinite/post.dart';
-import 'package:flutter_sample/page/infinite/post_service.dart';
+import 'package:flutter_sample/model/post.dart';
+import 'package:flutter_sample/api/api_service.dart';
 import 'package:flutter_sample/page/home/cluster_item.dart';
 import 'package:flutter_sample/page/home/place.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,7 +17,7 @@ class GlobalCubit extends Cubit<GlobalState> {
     try {
       if (state is GlobalInitial) {
         emit(GlobalLoading());
-        final posts = await PostService.getPosts(0);
+        final posts = await ApiService.getPosts(0);
         Timer(Duration(seconds: 3), () {
           emit(GlobalLoaded(globalList: posts));
         });
@@ -47,7 +47,7 @@ class GlobalCubit extends Cubit<GlobalState> {
           emit(GlobalLoadMore(fakeLoadingList: temp));
           print('LoadRight');
         }
-        final morePosts = await PostService.getPosts(totalList.length);
+        final morePosts = await ApiService.getPosts(totalList.length);
 
         if (index == 0) {
           List<Post> loadMoreList = [];
@@ -55,7 +55,7 @@ class GlobalCubit extends Cubit<GlobalState> {
           loadMoreList.addAll(totalList);
           Timer(Duration(seconds: 3), () {
             emit(GlobalLoaded(
-                globalList: loadMoreList, movePosition: PostService.postLimit));
+                globalList: loadMoreList, movePosition: ApiService.pageLimit));
           });
         } else {
           List<Post> loadMoreList = [];
@@ -65,7 +65,7 @@ class GlobalCubit extends Cubit<GlobalState> {
             emit(GlobalLoaded(
                 globalList: loadMoreList,
                 movePosition:
-                    (loadMoreList.length - 1) - PostService.postLimit));
+                    (loadMoreList.length - 1) - ApiService.pageLimit));
           });
         }
       }

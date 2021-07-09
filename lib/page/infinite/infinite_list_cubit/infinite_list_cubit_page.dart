@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sample/component/bottom_loader.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_cubit/post_cubit.dart';
-import 'package:flutter_sample/page/infinite/post.dart';
+import 'package:flutter_sample/model/post.dart';
 
 class InfiniteListCubitPage extends StatelessWidget {
   const InfiniteListCubitPage({Key? key}) : super(key: key);
@@ -39,9 +40,9 @@ class _PostListViewState extends State<PostListView> {
     return Container(
       child: BlocBuilder<PostCubit, PostState>(
         builder: (context, state) {
-          if(state is PostLoading) {
+          if (state is PostLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if(state is PostSuccess){
+          } else if (state is PostSuccess) {
             return ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return index >= state.posts.length && !state.isReachMax
@@ -57,7 +58,7 @@ class _PostListViewState extends State<PostListView> {
             return Center(child: Text('failed to fetch posts'));
           }
         },
-      ) ,
+      ),
     );
   }
 
@@ -79,20 +80,6 @@ class _PostListViewState extends State<PostListView> {
   }
 }
 
-
-class BottomLoader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(strokeWidth: 1.5),
-      ),
-    );
-  }
-}
-
 class PostListItem extends StatelessWidget {
   const PostListItem({Key? key, required this.post}) : super(key: key);
 
@@ -104,12 +91,11 @@ class PostListItem extends StatelessWidget {
     return Material(
       child: ListTile(
         leading: Text('${post.id}', style: textTheme.caption),
-        title: Text(post.title),
+        title: Text('${post.title}'),
         isThreeLine: true,
-        subtitle: Text(post.body),
+        subtitle: Text('${post.body}'),
         dense: true,
       ),
     );
   }
 }
-

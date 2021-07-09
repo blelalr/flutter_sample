@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/custom_widget/icon_button_default.dart';
-import 'package:flutter_sample/custom_widget/switch_theme_widget.dart';
-import 'package:flutter_sample/custom_widget/global_page_view.dart';
+import 'package:flutter_sample/component/icon_button_default.dart';
+import 'package:flutter_sample/component/switch_theme_widget.dart';
+import 'package:flutter_sample/component/global_page_view.dart';
 import 'package:flutter_sample/style/app_colors.dart';
 import 'package:flutter_sample/style/app_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';

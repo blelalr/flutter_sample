@@ -1,4 +1,4 @@
-class ProfileTaskModel {
+class ProfileTask {
   final String id;
   final String iconPath;
   final String title;
@@ -6,6 +6,6 @@ class ProfileTaskModel {
   final String buttonText;
   final bool isComplete;
 
-  ProfileTaskModel(this.id, this.iconPath, this.title, this.content,
-      this.buttonText, this.isComplete);
+  ProfileTask(this.id, this.iconPath, this.title, this.content, this.buttonText,
+      this.isComplete);
 }

@@ -6,6 +6,6 @@ abstract class ProfileTaskState {}
 class ProfileTaskInitial extends ProfileTaskState {}
 
 class ProfileTaskUpdate extends ProfileTaskState {
-  final List<ProfileTaskModel> profileTasks;
+  final List<ProfileTask> profileTasks;
   ProfileTaskUpdate({required this.profileTasks});
 }
