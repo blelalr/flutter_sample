@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
@@ -16,11 +17,24 @@ class PhotoCubit extends Cubit<PhotoState> {
         emit(PhotoLoading());
         final photos = await ApiService.getPhotos(0);
         emit(PhotoLoaded(photos: photos, isReachMax: photos.isEmpty));
-      } else if (state is PhotoLoaded) {
+      }
+    } catch (e) {
+      emit(PhotoFailed(e.toString()));
+    }
+  }
+
+  void loadMore() async {
+    try {
+      if (state is PhotoLoaded) {
+        print('LoadMore');
         var totalPhotos = List.of((state as PhotoLoaded).photos);
+        emit(PhotoLoadMore(photos: totalPhotos));
         final photos = await ApiService.getPhotos(totalPhotos.length);
         totalPhotos.addAll(photos);
-        emit(PhotoLoaded(photos: totalPhotos, isReachMax: photos.length == 0));
+        Timer(Duration(seconds: 1), () {
+          emit(
+              PhotoLoaded(photos: totalPhotos, isReachMax: photos.length == 0));
+        });
       }
     } catch (e) {
       emit(PhotoFailed(e.toString()));

@@ -10,6 +10,15 @@ class PhotoInitial extends PhotoState {}
 
 class PhotoLoading extends PhotoState {}
 
+class PhotoLoadMore extends PhotoState {
+  final List<dynamic> photos;
+
+  PhotoLoadMore({required this.photos});
+
+  @override
+  List<Object> get props => [photos];
+}
+
 class PhotoLoaded extends PhotoState {
   final List<dynamic> photos;
   final bool isReachMax;

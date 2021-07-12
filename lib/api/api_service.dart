@@ -20,7 +20,7 @@ class ApiService {
   static Future<List<Photo>> getPhotos(int startIndex) async {
     var response = await ApiManager().get(
         path: ApiConst.GET_PHOTOS,
-        params: <String, String>{'_start': '$startIndex', '_limit': '50'});
+        params: <String, String>{'_start': '$startIndex', '_limit': '48'});
     var photos =
         (response as List<dynamic>).map((e) => Photo.fromJson(e)).toList();
     return photos;

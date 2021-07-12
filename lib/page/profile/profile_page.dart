@@ -6,9 +6,9 @@ import 'package:flutter_sample/bloc/profile_task/profile_task_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/component/button_small_outlined.dart';
 import 'package:flutter_sample/component/button_small.dart';
-import 'package:flutter_sample/component/suggestion_card.dart';
+import 'package:flutter_sample/component/card_suggestion.dart';
 import 'package:flutter_sample/component/icon_button_default.dart';
-import 'package:flutter_sample/component/switch_theme_widget.dart';
+import 'package:flutter_sample/component/toggle_theme.dart';
 import 'package:flutter_sample/component/text_see_more.dart';
 import 'package:flutter_sample/model/profile_task.dart';
 import 'package:flutter_sample/model/suggestion.dart';
@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
               press: () => Navigator.pop(context)),
           elevation: 1,
           actions: [
-            SwitchThemeWidget(),
+            ToggleTheme(),
             IconButtonDefault(iconPath: 'assets/icon/notification_s.svg'),
             IconButtonDefault(iconPath: 'assets/icon/menu.svg')
           ],
@@ -470,7 +470,7 @@ class SuggestionFrame extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: suggestionList.length,
           itemBuilder: (context, index) {
-            return SuggestionCard(suggestionModel: suggestionList[index]);
+            return CardSuggestion(suggestionModel: suggestionList[index]);
           },
         ),
       ),

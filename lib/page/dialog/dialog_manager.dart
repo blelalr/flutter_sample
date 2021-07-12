@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/page/dialog/dialog_component.dart';
+import 'package:flutter_sample/model/dialog_component.dart';
 import 'package:flutter_sample/bloc/dialog/dialog_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

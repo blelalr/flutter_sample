@@ -5,9 +5,9 @@ import 'package:flutter_sample/model/suggestion.dart';
 import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SuggestionCard extends StatelessWidget {
+class CardSuggestion extends StatelessWidget {
   final Suggestion suggestionModel;
-  const SuggestionCard({Key? key, required this.suggestionModel})
+  const CardSuggestion({Key? key, required this.suggestionModel})
       : super(key: key);
 
   @override

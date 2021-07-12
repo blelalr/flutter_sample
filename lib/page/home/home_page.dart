@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/component/icon_button_default.dart';
-import 'package:flutter_sample/component/switch_theme_widget.dart';
+import 'package:flutter_sample/component/toggle_theme.dart';
 import 'package:flutter_sample/component/global_page_view.dart';
 import 'package:flutter_sample/res/app_colors.dart';
 import 'package:flutter_sample/res/app_fonts.dart';
@@ -109,8 +109,7 @@ class _MapPageState extends State<MapPage> {
           Positioned(
               left: 0.0,
               bottom: 40,
-              child:
-                  Container(width: 50, height: 50, child: SwitchThemeWidget())),
+              child: Container(width: 50, height: 50, child: ToggleTheme())),
           Positioned(
               right: 16,
               bottom: 39,

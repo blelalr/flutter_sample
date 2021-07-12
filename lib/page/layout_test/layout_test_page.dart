@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/bloc/global/global_cubit.dart';
 import 'package:flutter_sample/component/button_large.dart';
 import 'package:flutter_sample/component/button_small.dart';
-import 'package:flutter_sample/component/suggestion_card.dart';
+import 'package:flutter_sample/component/card_suggestion.dart';
 import 'package:flutter_sample/component/icon_button_default.dart';
-import 'package:flutter_sample/component/switch_theme_widget.dart';
+import 'package:flutter_sample/component/toggle_theme.dart';
 import 'package:flutter_sample/model/suggestion.dart';
 import 'package:flutter_sample/page/layout_test/scale_page_view.dart';
 import 'package:flutter_sample/res/app_colors.dart';
@@ -23,7 +23,7 @@ class LayoutTestSample extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             title: Text('Layout Test Sample'),
-            actions: [SwitchThemeWidget()],
+            actions: [ToggleTheme()],
           ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -36,7 +36,7 @@ class LayoutTestSample extends StatelessWidget {
                   width: double.infinity,
                   color: Colors.grey,
                   child: Center(
-                    child: SuggestionCard(
+                    child: CardSuggestion(
                         suggestionModel: Suggestion(
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9KgKZzL7dABScRnlAMu2Xc9cIgaEzrCRXJvNuXlBHwlZQ7zP9Ae2SIZDUEcZnrfMb8s&usqp=CAU',
                             'nickName',
