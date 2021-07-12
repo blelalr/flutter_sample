@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/bloc/global/global_cubit.dart';
-import 'package:flutter_sample/component/button_large.dart';
-import 'package:flutter_sample/component/button_small.dart';
+import 'package:flutter_sample/component/common/button_large.dart';
+import 'package:flutter_sample/component/common/button_small.dart';
 import 'package:flutter_sample/component/card_suggestion.dart';
-import 'package:flutter_sample/component/icon_button_default.dart';
-import 'package:flutter_sample/component/toggle_theme.dart';
+import 'package:flutter_sample/component/common/icon_button_default.dart';
+import 'package:flutter_sample/component/common/toggle_theme.dart';
 import 'package:flutter_sample/model/suggestion.dart';
 import 'package:flutter_sample/page/layout_test/scale_page_view.dart';
 import 'package:flutter_sample/res/app_colors.dart';

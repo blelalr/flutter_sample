@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/bloc/photo/photo_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/component/loader_bottom.dart';
+import 'package:flutter_sample/component/progress_bar_bottom.dart';
 import 'package:flutter_sample/component/app_bar_search.dart';
 import 'package:flutter_sample/model/photo.dart';
 import 'package:flutter_sample/res/app_colors.dart';
@@ -162,7 +162,7 @@ class _SearchPageViewState extends State<SearchPageView> {
                               SliverToBoxAdapter(
                                 child: Visibility(
                                     visible: (state is PhotoLoadMore),
-                                    child: LoaderBottom()),
+                                    child: ProgressBarBottom()),
                               ),
                             ]),
                 )));

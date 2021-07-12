@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sample/component/loader_bottom.dart';
+import 'package:flutter_sample/component/progress_bar_bottom.dart';
 import 'package:flutter_sample/page/infinite/infinite_list_bloc/post_bloc.dart';
 import 'package:flutter_sample/model/post.dart';
 
@@ -95,7 +95,7 @@ class BlocListView extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
             return index >= state.posts.length
-                ? LoaderBottom()
+                ? ProgressBarBottom()
                 : PostListItem(post: state.posts[index]);
           },
           itemCount:

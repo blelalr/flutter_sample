@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/component/icon_button_default.dart';
+import 'package:flutter_sample/component/common/icon_button_default.dart';
 import 'package:flutter_sample/res/app_colors.dart';
 import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

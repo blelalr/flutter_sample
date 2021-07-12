@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LoaderBottom extends StatelessWidget {
+class ProgressBarBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
