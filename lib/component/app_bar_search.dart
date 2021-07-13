@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/bloc/search/search_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
 import 'package:flutter_sample/component/common/icon_button_default.dart';
 import 'package:flutter_sample/res/app_colors.dart';
@@ -14,23 +15,21 @@ class AppBarSearch extends StatefulWidget {
 
 class _AppBarSearchState extends State<AppBarSearch> {
   TextEditingController _searchQueryController = TextEditingController();
-  bool _isSearching = false;
-  String searchQuery = "Search query";
   @override
   Widget build(BuildContext context) {
     final themeCubit = context.watch<ThemeCubit>();
+    final searchCubit = context.watch<SearchCubit>();
     return Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 8),
+      padding: const EdgeInsets.only(top: 12, bottom: 12),
       child: Row(
         children: [
           Visibility(
-              visible: (_isSearching == false),
+              visible: !searchCubit.isSearch,
               child: IconButtonDefault(
                   iconPath: 'assets/icon/arrow_left.svg',
-                  size: 16,
                   press: () => Navigator.pop(context))),
           Visibility(
-              visible: (_isSearching == true),
+              visible: searchCubit.isSearch,
               child: SizedBox(
                 width: 16,
               )),
@@ -53,7 +52,7 @@ class _AppBarSearchState extends State<AppBarSearch> {
                   Flexible(
                     child: TextField(
                       controller: _searchQueryController,
-                      autofocus: false,
+                      autofocus: searchCubit.isSearch,
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: "Search",
@@ -72,7 +71,7 @@ class _AppBarSearchState extends State<AppBarSearch> {
           ),
           SizedBox(width: 8),
           Visibility(
-              visible: (_isSearching == true),
+              visible: searchCubit.isSearch,
               child: GestureDetector(
                 child: Text(
                   'Cancel',
@@ -87,47 +86,18 @@ class _AppBarSearchState extends State<AppBarSearch> {
     );
   }
 
-  List<Widget> _buildActions() {
-    if (_isSearching) {
-      return <Widget>[
-        IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: () {
-            if (_searchQueryController == null ||
-                _searchQueryController.text.isEmpty) {
-              Navigator.pop(context);
-              return;
-            }
-            _clearSearchQuery();
-          },
-        ),
-      ];
-    }
-
-    return <Widget>[
-      IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: _startSearch,
-      ),
-    ];
-  }
-
   void _startSearch() {
     // ModalRoute.of(context)
     //     ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
-
-    setState(() {
-      _isSearching = true;
-    });
+    context.read<SearchCubit>().switchToSearchMode();
   }
 
-  void updateSearchQuery(String newQuery) {
-    setState(() {
-      searchQuery = newQuery;
-    });
+  void updateSearchQuery(String query) {
+    context.read<SearchCubit>().searchQuery(query);
   }
 
   void _stopSearching() {
+    context.read<SearchCubit>().switchToDiscoverMode();
     _clearSearchQuery();
 
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -135,10 +105,6 @@ class _AppBarSearchState extends State<AppBarSearch> {
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
-
-    setState(() {
-      _isSearching = false;
-    });
   }
 
   void _clearSearchQuery() {

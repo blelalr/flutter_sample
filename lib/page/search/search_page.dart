@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/bloc/photo/photo_cubit.dart';
+import 'package:flutter_sample/bloc/search/search_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
+import 'package:flutter_sample/component/common/toggle_theme.dart';
 import 'package:flutter_sample/component/progress_bar_bottom.dart';
 import 'package:flutter_sample/component/app_bar_search.dart';
 import 'package:flutter_sample/model/photo.dart';
@@ -15,54 +17,119 @@ class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PhotoCubit>(
-      create: (context) => PhotoCubit()..fetchPhoto(),
-      child: Scaffold(body: SearchPageView()),
+    return MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => PhotoCubit()..fetchPhoto()),
+      BlocProvider(create: (context) => SearchCubit()..switchToDiscoverMode()),
+    ], child: SearchPageView());
+  }
+}
+
+class SearchPageView extends StatelessWidget {
+  const SearchPageView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final searchBloc = context.watch<SearchCubit>();
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: false,
+            titleSpacing: 0,
+            elevation: 0,
+            actions: [ToggleTheme()],
+            title: AppBarSearch(),
+            bottom: searchBloc.isSearch
+                ? TabBar(
+                    indicatorColor: Theme.of(context).iconTheme.color,
+                    isScrollable: true,
+                    unselectedLabelColor: Theme.of(context).hintColor,
+                    tabs: [
+                      TabView(tabTitle: 'All'),
+                      TabView(tabTitle: 'Locations'),
+                      TabView(tabTitle: 'Users'),
+                      TabView(tabTitle: 'Hashtags'),
+                    ],
+                  )
+                : null,
+          ),
+          body: (searchBloc.isSearch)
+              ? TabBarView(children: [
+                  SearchResult(),
+                  SearchResult(),
+                  SearchResult(),
+                  SearchResult()
+                ])
+              : DiscoverFrame()),
     );
   }
 }
 
-class SearchPageView extends StatefulWidget {
-  const SearchPageView({Key? key}) : super(key: key);
-
-  @override
-  _SearchPageViewState createState() => _SearchPageViewState();
+photosListSize(PhotoState state) {
+  if (state is PhotoLoaded) {
+    return state.photos.length;
+  } else if (state is PhotoLoadMore) {
+    return state.photos.length + 3;
+  } else {
+    return 0;
+  }
 }
 
-class _SearchPageViewState extends State<SearchPageView> {
-  final _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
-
-  _onUpdateScroll(ScrollMetrics metrics) {
-    // final maxScroll = metrics.maxScrollExtent;
-    // final currentScroll = metrics.pixels;
-    // if (currentScroll >= (maxScroll * 0.8)) {
-    //   context.read<PhotoCubit>().loadMore();
-    // }
-    if (metrics.extentAfter < 300) {
-      context.read<PhotoCubit>().loadMore();
-    }
-  }
+class PhotoItem extends StatelessWidget {
+  final Photo? photo;
+  const PhotoItem({Key? key, this.photo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+        child: Image.network(
+      '${photo?.thumbnailUrl}',
+      fit: BoxFit.cover,
+    ));
+  }
+}
+
+class TabView extends StatelessWidget {
+  const TabView({Key? key, required this.tabTitle}) : super(key: key);
+  final String tabTitle;
+  @override
+  Widget build(BuildContext context) {
+    return Tab(
+      child: Container(
+        padding: EdgeInsets.only(left: 12, right: 12),
+        child: Text(
+          '$tabTitle',
+        ),
+      ),
+    );
+  }
+}
+
+class SearchResult extends StatelessWidget {
+  const SearchResult({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.lightGreen, child: Center(child: Text('no Result')));
+  }
+}
+
+class DiscoverFrame extends StatelessWidget {
+  const DiscoverFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final _scrollController = ScrollController();
     final themeBloc = context.watch<ThemeCubit>();
+    final searchBloc = context.watch<SearchCubit>();
     return BlocBuilder<PhotoCubit, PhotoState>(
       builder: (context, state) {
         return NotificationListener<ScrollNotification>(
             onNotification: (scrollNotification) {
               if (scrollNotification is ScrollUpdateNotification) {
-                _onUpdateScroll(scrollNotification.metrics);
+                _onUpdateScroll(scrollNotification.metrics, context);
               }
               return false;
             },
@@ -70,48 +137,18 @@ class _SearchPageViewState extends State<SearchPageView> {
                 onRefresh: () async {
                   await Future.delayed(Duration(seconds: 3));
                 },
-                child: DefaultTabController(
-                  length: 4,
-                  child: (state is PhotoLoading)
-                      ? const Center(child: CircularProgressIndicator())
-                      : CustomScrollView(
-                          physics: ClampingScrollPhysics(),
-                          controller: _scrollController,
-                          slivers: [
-                              SliverToBoxAdapter(
-                                  child: SafeArea(
-                                child: Column(children: [
-                                  AppBarSearch(),
-                                  TabBar(
-                                      indicatorColor:
-                                          Theme.of(context).iconTheme.color,
-                                      isScrollable: true,
-                                      tabs: [
-                                        Tab(
-                                          child: Container(
-                                            padding: EdgeInsets.only(
-                                                left: 12, right: 12),
-                                            child: Text('All'),
-                                          ),
-                                        ),
-                                        Tab(
-                                            child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Text('Locations'),
-                                        )),
-                                        Tab(
-                                            child: Container(
-                                                padding: EdgeInsets.only(
-                                                    left: 12, right: 12),
-                                                child: Text('Users'))),
-                                        Tab(
-                                            child: Container(
-                                                padding: EdgeInsets.only(
-                                                    left: 12, right: 12),
-                                                child: Text('Hashtags'))),
-                                      ]),
-                                  StaggeredGridView.countBuilder(
+                child: (state is PhotoLoading)
+                    ? const Center(child: CircularProgressIndicator())
+                    : CustomScrollView(
+                        physics: ClampingScrollPhysics(),
+                        controller: _scrollController,
+                        slivers: [
+                            SliverToBoxAdapter(
+                                child: SafeArea(
+                              child: Column(children: [
+                                Visibility(
+                                  visible: !searchBloc.isSearch,
+                                  child: StaggeredGridView.countBuilder(
                                     controller: _scrollController,
                                     shrinkWrap: true,
                                     crossAxisCount: 6,
@@ -157,40 +194,27 @@ class _SearchPageViewState extends State<SearchPageView> {
                                                 ? 6
                                                 : 3),
                                   ),
-                                ]),
-                              )),
-                              SliverToBoxAdapter(
-                                child: Visibility(
-                                    visible: (state is PhotoLoadMore),
-                                    child: ProgressBarBottom()),
-                              ),
-                            ]),
-                )));
+                                ),
+                              ]),
+                            )),
+                            SliverToBoxAdapter(
+                              child: Visibility(
+                                  visible: (state is PhotoLoadMore),
+                                  child: ProgressBarBottom()),
+                            ),
+                          ])));
       },
     );
   }
-}
 
-photosListSize(PhotoState state) {
-  if (state is PhotoLoaded) {
-    return state.photos.length;
-  } else if (state is PhotoLoadMore) {
-    return state.photos.length + 3;
-  } else {
-    return 0;
-  }
-}
-
-class PhotoItem extends StatelessWidget {
-  final Photo? photo;
-  const PhotoItem({Key? key, this.photo}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: Image.network(
-      '${photo?.thumbnailUrl}',
-      fit: BoxFit.cover,
-    ));
+  _onUpdateScroll(ScrollMetrics metrics, BuildContext context) {
+    // final maxScroll = metrics.maxScrollExtent;
+    // final currentScroll = metrics.pixels;
+    // if (currentScroll >= (maxScroll * 0.8)) {
+    //   context.read<PhotoCubit>().loadMore();
+    // }
+    if (metrics.extentAfter < 300) {
+      context.read<PhotoCubit>().loadMore();
+    }
   }
 }
