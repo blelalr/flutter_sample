@@ -11,6 +11,13 @@ class DiscoverMode extends SearchState {}
 
 class Searching extends SearchState {}
 
-class Searched extends SearchState {}
+class Searched extends SearchState {
+  final List<User> searchResult;
+  Searched({this.searchResult = const <User>[]});
+}
 
-class SearchFail extends SearchState {}
+class SearchFail extends SearchState {
+  final String errorMessage;
+
+  SearchFail(this.errorMessage);
+}

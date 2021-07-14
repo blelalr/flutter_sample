@@ -8,15 +8,14 @@ enum DioMethod {
 }
 
 class ApiManager {
-
   Dio _dio = Dio();
   static final ApiManager _apiServiceManager = ApiManager._internal();
 
   factory ApiManager() {
     BaseOptions options = BaseOptions(
-        connectTimeout: 15*1000, // 15 seconds
-        receiveTimeout: 15*1000 // 60 seconds
-    );
+        connectTimeout: 15 * 1000, // 15 seconds
+        receiveTimeout: 15 * 1000, // 60 seconds
+        headers: {'User-Agent': 'request'});
     _apiServiceManager._dio = Dio(options);
     return _apiServiceManager;
   }
@@ -31,7 +30,8 @@ class ApiManager {
     return await requestHttp(path, method: DioMethod.post, params: params);
   }
 
-  Future requestHttp(String path, {DioMethod method = DioMethod.get, Map<String, dynamic>? params}) async {
+  Future requestHttp(String path,
+      {DioMethod method = DioMethod.get, Map<String, dynamic>? params}) async {
     const methodValues = {
       DioMethod.get: 'get',
       DioMethod.post: 'post',
@@ -44,20 +44,23 @@ class ApiManager {
 
       switch (method) {
         case DioMethod.get:
-          response = await _dio.get(path, queryParameters: params , options: Options(method: methodValues[method]));
+          print('get : $path');
+          print('get : $params');
+          response = await _dio.get(path,
+              queryParameters: params,
+              options: Options(method: methodValues[method]));
           break;
         default:
-          response = await _dio.request(path, data: params, options: Options(method: methodValues[method]));
+          response = await _dio.request(path,
+              data: params, options: Options(method: methodValues[method]));
           break;
       }
 
       return response.data;
-
     } on DioError catch (e) {
       print('DioError--- ${e.type}');
       print('DioError--- ${e.message}');
       throw e;
     }
   }
-
 }

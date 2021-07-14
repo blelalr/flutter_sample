@@ -2,6 +2,7 @@ import 'package:flutter_sample/api/api_manager.dart';
 import 'package:flutter_sample/api/api_const.dart';
 import 'package:flutter_sample/model/photo.dart';
 import 'package:flutter_sample/model/post.dart';
+import 'package:flutter_sample/model/user_data.dart';
 
 class ApiService {
   static int pageLimit = 10;
@@ -24,5 +25,16 @@ class ApiService {
     var photos =
         (response as List<dynamic>).map((e) => Photo.fromJson(e)).toList();
     return photos;
+  }
+
+  static Future<UserData> getSearchUser(String query, int page) async {
+    var response = await ApiManager().get(
+        path: ApiConst.GET_SEARCH_USERS,
+        params: <String, String>{
+          'q': '$query',
+          'page': '$page',
+          'per_page': '10'
+        });
+    return UserData.fromJson(response);
   }
 }

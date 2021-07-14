@@ -97,7 +97,6 @@ class _AppBarSearchState extends State<AppBarSearch> {
   }
 
   void _stopSearching() {
-    context.read<SearchCubit>().switchToDiscoverMode();
     _clearSearchQuery();
 
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -105,12 +104,13 @@ class _AppBarSearchState extends State<AppBarSearch> {
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
+
+    context.read<SearchCubit>().switchToDiscoverMode();
   }
 
   void _clearSearchQuery() {
     setState(() {
       _searchQueryController.clear();
-      updateSearchQuery("");
     });
   }
 }

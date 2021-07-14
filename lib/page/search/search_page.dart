@@ -8,8 +8,8 @@ import 'package:flutter_sample/component/common/toggle_theme.dart';
 import 'package:flutter_sample/component/progress_bar_bottom.dart';
 import 'package:flutter_sample/component/app_bar_search.dart';
 import 'package:flutter_sample/model/photo.dart';
+import 'package:flutter_sample/model/user_data.dart';
 import 'package:flutter_sample/res/app_colors.dart';
-import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
@@ -33,6 +33,7 @@ class SearchPageView extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: false,
@@ -56,10 +57,10 @@ class SearchPageView extends StatelessWidget {
           ),
           body: (searchBloc.isSearch)
               ? TabBarView(children: [
-                  SearchResult(),
-                  SearchResult(),
-                  SearchResult(),
-                  SearchResult()
+                  AllResultFrame(),
+                  LocationResultFrame(),
+                  UsersResultFrame(),
+                  HashTagResultFrame()
                 ])
               : DiscoverFrame()),
     );
@@ -106,13 +107,101 @@ class TabView extends StatelessWidget {
   }
 }
 
-class SearchResult extends StatelessWidget {
-  const SearchResult({Key? key}) : super(key: key);
+class AllResultFrame extends StatelessWidget {
+  const AllResultFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        if (state is Searching) {
+          return Container(
+              padding: EdgeInsets.all(8),
+              color: Colors.yellow,
+              child: Align(
+                  alignment: Alignment.topCenter, child: Text('Searching')));
+        } else if (state is Searched) {
+          return ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return index >= state.searchResult.length //&& !state.isReachMax
+                    ? ProgressBarBottom()
+                    : RepoListItem(user: state.searchResult[index]);
+              },
+              itemCount: state.searchResult.length
+              // state.isReachMax ? state.posts.length : state.posts.length + 1,
+              // controller: ScrollController(),
+              );
+        } else {
+          return Container(
+              padding: EdgeInsets.all(8),
+              color: Colors.lightGreen,
+              child: Align(
+                  alignment: Alignment.topCenter, child: Text('no Result')));
+        }
+      },
+    );
+  }
+}
+
+class RepoListItem extends StatelessWidget {
+  final User user;
+  const RepoListItem({Key? key, required this.user}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Material(
+      child: ListTile(
+        leading: ClipOval(
+          child: Image.network(
+            '${user.avatarUrl}',
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+        ),
+        title: Text('${user.login}'),
+        isThreeLine: true,
+        subtitle: Text('${user.id}'),
+        dense: true,
+      ),
+    );
+  }
+}
+
+class LocationResultFrame extends StatelessWidget {
+  const LocationResultFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.lightGreen, child: Center(child: Text('no Result')));
+        padding: EdgeInsets.all(8),
+        color: Colors.lightGreen,
+        child: Align(alignment: Alignment.topCenter, child: Text('no Result')));
+  }
+}
+
+class UsersResultFrame extends StatelessWidget {
+  const UsersResultFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.all(8),
+        color: Colors.lightGreen,
+        child: Align(alignment: Alignment.topCenter, child: Text('no Result')));
+  }
+}
+
+class HashTagResultFrame extends StatelessWidget {
+  const HashTagResultFrame({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.all(8),
+        color: Colors.lightGreen,
+        child: Align(alignment: Alignment.topCenter, child: Text('no Result')));
   }
 }
 
