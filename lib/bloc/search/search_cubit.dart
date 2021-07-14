@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sample/api/api_service.dart';
+import 'package:flutter_sample/model/repo_data.dart';
 import 'package:flutter_sample/model/user_data.dart';
 import 'package:meta/meta.dart';
 
@@ -23,8 +24,11 @@ class SearchCubit extends Cubit<SearchState> {
   void searchQuery(String query) async {
     emit(Searching());
     try {
-      final repo = await ApiService.getSearchUser(query, 0);
-      emit(Searched(searchResult: repo.items));
+      final user = await ApiService.getSearchUser(query, 0);
+      final repo = await ApiService.getSearchRepo(query, 0);
+      emit(Searched());
+      state.userCache = user.users;
+      state.repoCache = repo.repos;
     } catch (e) {
       print('error: ${e.toString()}');
       emit(SearchFail(e.toString()));

@@ -8,6 +8,7 @@ import 'package:flutter_sample/component/common/toggle_theme.dart';
 import 'package:flutter_sample/component/progress_bar_bottom.dart';
 import 'package:flutter_sample/component/app_bar_search.dart';
 import 'package:flutter_sample/model/photo.dart';
+import 'package:flutter_sample/model/repo_data.dart';
 import 'package:flutter_sample/model/user_data.dart';
 import 'package:flutter_sample/res/app_colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -114,42 +115,52 @@ class AllResultFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        if (state is Searching) {
-          return Container(
-              padding: EdgeInsets.all(8),
-              color: Colors.yellow,
-              child: Align(
-                  alignment: Alignment.topCenter, child: Text('Searching')));
-        } else if (state is Searched) {
-          return ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return index >= state.searchResult.length //&& !state.isReachMax
-                    ? ProgressBarBottom()
-                    : RepoListItem(user: state.searchResult[index]);
-              },
-              itemCount: state.searchResult.length
-              // state.isReachMax ? state.posts.length : state.posts.length + 1,
-              // controller: ScrollController(),
-              );
-        } else {
-          return Container(
-              padding: EdgeInsets.all(8),
-              color: Colors.lightGreen,
-              child: Align(
-                  alignment: Alignment.topCenter, child: Text('no Result')));
-        }
+        var users = state.userCache;
+        return ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return index >= users.length //&& !state.isReachMax
+                  ? ProgressBarBottom()
+                  : UserListItem(user: users[index]);
+            },
+            itemCount: users.length
+            // state.isReachMax ? state.posts.length : state.posts.length + 1,
+            // controller: ScrollController(),
+            );
+        // if (state is Searching) {
+        //   return Container(
+        //       padding: EdgeInsets.all(8),
+        //       color: Colors.yellow,
+        //       child: Align(
+        //           alignment: Alignment.topCenter, child: Text('Searching')));
+        // } else if (state is UserSearched) {
+        //   return ListView.builder(
+        //       itemBuilder: (BuildContext context, int index) {
+        //         return index >= state.searchResult.length //&& !state.isReachMax
+        //             ? ProgressBarBottom()
+        //             : RepoListItem(user: state.searchResult[index]);
+        //       },
+        //       itemCount: state.searchResult.length
+        //       // state.isReachMax ? state.posts.length : state.posts.length + 1,
+        //       // controller: ScrollController(),
+        //       );
+        // } else {
+        //   return Container(
+        //       padding: EdgeInsets.all(8),
+        //       color: Colors.lightGreen,
+        //       child: Align(
+        //           alignment: Alignment.topCenter, child: Text('no Result')));
+        // }
       },
     );
   }
 }
 
-class RepoListItem extends StatelessWidget {
+class UserListItem extends StatelessWidget {
   final User user;
-  const RepoListItem({Key? key, required this.user}) : super(key: key);
+  const UserListItem({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Material(
       child: ListTile(
         leading: ClipOval(
@@ -161,7 +172,6 @@ class RepoListItem extends StatelessWidget {
           ),
         ),
         title: Text('${user.login}'),
-        isThreeLine: true,
         subtitle: Text('${user.id}'),
         dense: true,
       ),
@@ -174,10 +184,69 @@ class LocationResultFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(8),
-        color: Colors.lightGreen,
-        child: Align(alignment: Alignment.topCenter, child: Text('no Result')));
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        var repoCache = state.repoCache;
+        return ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return index >= repoCache.length //&& !state.isReachMax
+                  ? ProgressBarBottom()
+                  : RepoListItem(repo: repoCache[index]);
+            },
+            itemCount: repoCache.length
+            // state.isReachMax ? state.posts.length : state.posts.length + 1,
+            // controller: ScrollController(),
+            );
+        // if (state is Searching) {
+        //   return Container(
+        //       padding: EdgeInsets.all(8),
+        //       color: Colors.yellow,
+        //       child: Align(
+        //           alignment: Alignment.topCenter, child: Text('Searching')));
+        // } else if (state is UserSearched) {
+        //   return ListView.builder(
+        //       itemBuilder: (BuildContext context, int index) {
+        //         return index >= state.searchResult.length //&& !state.isReachMax
+        //             ? ProgressBarBottom()
+        //             : RepoListItem(user: state.searchResult[index]);
+        //       },
+        //       itemCount: state.searchResult.length
+        //       // state.isReachMax ? state.posts.length : state.posts.length + 1,
+        //       // controller: ScrollController(),
+        //       );
+        // } else {
+        //   return Container(
+        //       padding: EdgeInsets.all(8),
+        //       color: Colors.lightGreen,
+        //       child: Align(
+        //           alignment: Alignment.topCenter, child: Text('no Result')));
+        // }
+      },
+    );
+  }
+}
+
+class RepoListItem extends StatelessWidget {
+  final Repo repo;
+  const RepoListItem({Key? key, required this.repo}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: ListTile(
+        leading: ClipOval(
+          child: Image.network(
+            '${repo.owner.avatarUrl}',
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+        ),
+        title: Text('${repo.id}'),
+        subtitle: Text('${repo.nodeId}'),
+        dense: true,
+      ),
+    );
   }
 }
 

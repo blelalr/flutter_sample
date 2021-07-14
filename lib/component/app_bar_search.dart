@@ -61,7 +61,8 @@ class _AppBarSearchState extends State<AppBarSearch> {
                             textColor: Theme.of(context).hintColor),
                       ),
                       style: AppFonts.bodyText(),
-                      onChanged: (query) => updateSearchQuery(query),
+                      onChanged: (query) =>
+                          updateSearchQuery(_searchQueryController.text),
                       onTap: _startSearch,
                     ),
                   ),

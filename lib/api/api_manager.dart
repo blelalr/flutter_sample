@@ -17,6 +17,10 @@ class ApiManager {
         receiveTimeout: 15 * 1000, // 60 seconds
         headers: {'User-Agent': 'request'});
     _apiServiceManager._dio = Dio(options);
+    _apiServiceManager._dio.interceptors.add(LogInterceptor(
+      requestHeader: false,
+      responseHeader: false,
+    ));
     return _apiServiceManager;
   }
 
@@ -41,11 +45,8 @@ class ApiManager {
 
     try {
       Response response;
-
       switch (method) {
         case DioMethod.get:
-          print('get : $path');
-          print('get : $params');
           response = await _dio.get(path,
               queryParameters: params,
               options: Options(method: methodValues[method]));
@@ -58,8 +59,6 @@ class ApiManager {
 
       return response.data;
     } on DioError catch (e) {
-      print('DioError--- ${e.type}');
-      print('DioError--- ${e.message}');
       throw e;
     }
   }

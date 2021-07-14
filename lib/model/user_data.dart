@@ -12,23 +12,23 @@ class UserData {
   UserData({
     required this.totalCount,
     required this.incompleteResults,
-    required this.items,
+    required this.users,
   });
 
   int totalCount;
   bool incompleteResults;
-  List<User> items;
+  List<User> users;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         totalCount: json["total_count"],
         incompleteResults: json["incomplete_results"],
-        items: List<User>.from(json["items"].map((x) => User.fromJson(x))),
+        users: List<User>.from(json["items"].map((x) => User.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "total_count": totalCount,
         "incomplete_results": incompleteResults,
-        "items": List<dynamic>.from(items.map((x) => x.toJson())),
+        "items": List<dynamic>.from(users.map((x) => x.toJson())),
       };
 }
 
