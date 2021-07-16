@@ -15,7 +15,10 @@ class ApiManager {
     BaseOptions options = BaseOptions(
         connectTimeout: 15 * 1000, // 15 seconds
         receiveTimeout: 15 * 1000, // 60 seconds
-        headers: {'User-Agent': 'request'});
+        headers: {
+          'User-Agent': 'request',
+          'Authorization': 'token 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'
+        });
     _apiServiceManager._dio = Dio(options);
     _apiServiceManager._dio.interceptors.add(LogInterceptor(
       requestHeader: false,

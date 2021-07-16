@@ -1,35 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_sample/bloc/search/search_cubit.dart';
+import 'package:flutter_sample/bloc/search/location_search_cubit.dart';
+import 'package:flutter_sample/bloc/search/search_bar_cubit.dart';
+import 'package:flutter_sample/bloc/search/all_search_cubit.dart';
 import 'package:flutter_sample/bloc/theme/theme_cubit.dart';
-import 'package:flutter_sample/component/common/icon_button_default.dart';
+import 'package:flutter_sample/component/icon_button_default.dart';
 import 'package:flutter_sample/res/app_colors.dart';
 import 'package:flutter_sample/res/app_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppBarSearch extends StatefulWidget {
-  const AppBarSearch({Key? key}) : super(key: key);
+class SearchBar extends StatefulWidget {
+  const SearchBar({Key? key}) : super(key: key);
 
   @override
-  _AppBarSearchState createState() => _AppBarSearchState();
+  _SearchBarState createState() => _SearchBarState();
 }
 
-class _AppBarSearchState extends State<AppBarSearch> {
+class _SearchBarState extends State<SearchBar> {
   TextEditingController _searchQueryController = TextEditingController();
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _searchQueryController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeCubit = context.watch<ThemeCubit>();
-    final searchCubit = context.watch<SearchCubit>();
+    final searchBarCubit = context.watch<SearchBarCubit>();
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 12),
       child: Row(
         children: [
           Visibility(
-              visible: !searchCubit.isSearch,
+              visible: !searchBarCubit.isSearchMode,
               child: IconButtonDefault(
                   iconPath: 'assets/icon/arrow_left.svg',
                   press: () => Navigator.pop(context))),
           Visibility(
-              visible: searchCubit.isSearch,
+              visible: searchBarCubit.isSearchMode,
               child: SizedBox(
                 width: 16,
               )),
@@ -51,8 +63,8 @@ class _AppBarSearchState extends State<AppBarSearch> {
                   ),
                   Flexible(
                     child: TextField(
-                      controller: _searchQueryController,
-                      autofocus: searchCubit.isSearch,
+                      autofocus: searchBarCubit.isSearchMode,
+                      onChanged: (query) => _searchQuery(query),
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: "Search",
@@ -61,8 +73,6 @@ class _AppBarSearchState extends State<AppBarSearch> {
                             textColor: Theme.of(context).hintColor),
                       ),
                       style: AppFonts.bodyText(),
-                      onChanged: (query) =>
-                          updateSearchQuery(_searchQueryController.text),
                       onTap: _startSearch,
                     ),
                   ),
@@ -72,7 +82,7 @@ class _AppBarSearchState extends State<AppBarSearch> {
           ),
           SizedBox(width: 8),
           Visibility(
-              visible: searchCubit.isSearch,
+              visible: searchBarCubit.isSearchMode,
               child: GestureDetector(
                 child: Text(
                   'Cancel',
@@ -90,28 +100,27 @@ class _AppBarSearchState extends State<AppBarSearch> {
   void _startSearch() {
     // ModalRoute.of(context)
     //     ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
-    context.read<SearchCubit>().switchToSearchMode();
+    context.read<SearchBarCubit>().switchToSearchMode();
   }
 
-  void updateSearchQuery(String query) {
-    context.read<SearchCubit>().searchQuery(query);
+  void _searchQuery(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(Duration(milliseconds: 500), () {
+      if (query != "") {
+        context.read<AllSearchCubit>().searchQuery(query);
+        context.read<LocationSearchCubit>().searchQuery(query);
+      }
+    });
   }
 
   void _stopSearching() {
-    _clearSearchQuery();
-
     FocusScopeNode currentFocus = FocusScope.of(context);
-
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
 
-    context.read<SearchCubit>().switchToDiscoverMode();
-  }
-
-  void _clearSearchQuery() {
-    setState(() {
-      _searchQueryController.clear();
-    });
+    context.read<SearchBarCubit>().switchToDiscoverMode();
+    context.read<AllSearchCubit>().stopQuery();
+    context.read<LocationSearchCubit>().stopQuery();
   }
 }

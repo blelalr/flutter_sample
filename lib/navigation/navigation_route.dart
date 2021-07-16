@@ -53,7 +53,7 @@ class NavigationRoute {
       case NavigationConstants.PROFILE:
         return normalNavigate(ProfilePage());
       case NavigationConstants.SEARCH:
-        return normalNavigate(SearchPage());
+        return navigateToFadeDefault(SearchPage(), settings);
       default:
         return MaterialPageRoute(
           builder: (context) => NotFoundNavigationWidget(),
