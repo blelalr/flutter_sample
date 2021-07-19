@@ -86,7 +86,7 @@ class _SearchPageViewState extends State<SearchPageView>
                 AllResultFrame(),
                 LocationResultFrame(),
                 UsersResultFrame(),
-                HashTagResultFrame()
+                UsersResultFrame(),
               ])
             : DiscoverFrame());
   }
@@ -110,18 +110,6 @@ class TabView extends StatelessWidget {
 
 class UsersResultFrame extends StatelessWidget {
   const UsersResultFrame({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(8),
-        color: Colors.lightGreen,
-        child: Align(alignment: Alignment.topCenter, child: Text('no Result')));
-  }
-}
-
-class HashTagResultFrame extends StatelessWidget {
-  const HashTagResultFrame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

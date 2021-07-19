@@ -21,7 +21,7 @@ class DiscoverFrame extends StatelessWidget {
       builder: (context, state) {
         return NotificationListener<ScrollNotification>(
             onNotification: (scrollNotification) {
-              if (scrollNotification is ScrollStartNotification) {
+              if (scrollNotification is ScrollUpdateNotification) {
                 _onUpdateScroll(scrollNotification.metrics, context);
               }
               return false;

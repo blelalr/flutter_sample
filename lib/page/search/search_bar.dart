@@ -20,11 +20,36 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   TextEditingController _searchQueryController = TextEditingController();
   Timer? _debounce;
+  String lastQuery = "";
+  @override
+  void initState() {
+    _searchQueryController.addListener(_onSearchChanged);
+    super.initState();
+  }
 
   @override
   void dispose() {
+    _searchQueryController.removeListener(_onSearchChanged);
     _searchQueryController.dispose();
     super.dispose();
+  }
+
+  _onSearchChanged() {
+    if (lastQuery != _searchQueryController.text) {
+      context.read<SearchBarCubit>().emit(SearchQueryIsChange());
+      lastQuery = _searchQueryController.text;
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(Duration(milliseconds: 500), () {
+        if (_searchQueryController.text != "") {
+          context
+              .read<AllSearchCubit>()
+              .searchQuery(_searchQueryController.text);
+          context
+              .read<LocationSearchCubit>()
+              .searchQuery(_searchQueryController.text);
+        }
+      });
+    }
   }
 
   @override
@@ -63,8 +88,8 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                   Flexible(
                     child: TextField(
+                      controller: _searchQueryController,
                       autofocus: searchBarCubit.isSearchMode,
-                      onChanged: (query) => _searchQuery(query),
                       decoration: InputDecoration(
                         isDense: true,
                         hintText: "Search",
@@ -74,6 +99,14 @@ class _SearchBarState extends State<SearchBar> {
                       ),
                       style: AppFonts.bodyText(),
                       onTap: _startSearch,
+                    ),
+                  ),
+                  Visibility(
+                    visible: (searchBarCubit.state is SearchQueryIsChange),
+                    child: IconButtonDefault(
+                      iconPath: 'assets/icon/icon_close.svg',
+                      color: Theme.of(context).hintColor,
+                      press: _clearSearchQuery,
                     ),
                   ),
                 ],
@@ -103,23 +136,18 @@ class _SearchBarState extends State<SearchBar> {
     context.read<SearchBarCubit>().switchToSearchMode();
   }
 
-  void _searchQuery(String query) {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(Duration(milliseconds: 500), () {
-      if (query != "") {
-        context.read<AllSearchCubit>().searchQuery(query);
-        context.read<LocationSearchCubit>().searchQuery(query);
-      }
-    });
+  void _stopSearching() {
+    _clearSearchQuery();
+    context.read<SearchBarCubit>().switchToDiscoverMode();
   }
 
-  void _stopSearching() {
+  void _clearSearchQuery() {
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
-
-    context.read<SearchBarCubit>().switchToDiscoverMode();
+    _searchQueryController.clear();
+    context.read<SearchBarCubit>().switchToSearchMode();
     context.read<AllSearchCubit>().stopQuery();
     context.read<LocationSearchCubit>().stopQuery();
   }

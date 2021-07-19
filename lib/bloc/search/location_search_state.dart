@@ -9,7 +9,14 @@ class LocationSearching extends LocationSearchState {}
 
 class LocationSearched extends LocationSearchState {
   final List<Repo> locationList;
-  LocationSearched(this.locationList);
+  final bool isReachMax;
+  final String query;
+  final int page;
+  LocationSearched(
+      {required this.locationList,
+      required this.isReachMax,
+      required this.query,
+      required this.page});
 }
 
 class LocationSearchFail extends LocationSearchState {

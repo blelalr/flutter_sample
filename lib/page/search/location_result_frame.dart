@@ -3,7 +3,7 @@ import 'package:flutter_sample/bloc/search/location_search_cubit.dart';
 import 'package:flutter_sample/component/progress_bar_bottom.dart';
 import 'package:flutter_sample/model/repo_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'location_list_item_view.dart';
+import 'package:flutter_sample/page/search/list_item_view.dart';
 
 class LocationResultFrame extends StatelessWidget {
   const LocationResultFrame({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class LocationResultFrame extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return index >= repos.length //&& !state.isReachMax
                           ? ProgressBarBottom()
-                          : LocationListItemView(repo: repos[index]);
+                          : ListItemView<Repo>(item: repos[index]);
                     },
                     itemCount: repos.length
                     // state.isReachMax ? state.posts.length : state.posts.length + 1,

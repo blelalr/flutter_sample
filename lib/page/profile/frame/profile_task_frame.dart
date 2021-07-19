@@ -101,7 +101,7 @@ class ProfileTaskItem extends StatelessWidget {
                     .read<ProfileTaskCubit>()
                     .deleteProfileTask(profileTaskModel)
               },
-              child: SvgPicture.asset('assets/icon/icon_colse.svg',
+              child: SvgPicture.asset('assets/icon/icon_close.svg',
                   color: Theme.of(context).hintColor, width: 20, height: 20),
             ))
       ],

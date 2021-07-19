@@ -5,7 +5,7 @@ class SearchBarCubit extends Cubit<SearchBarState> {
   SearchBarCubit() : super(DiscoverMode());
 
   bool get isSearchMode {
-    return (state is SearchMode);
+    return !(state is DiscoverMode);
   }
 
   void switchToDiscoverMode() {

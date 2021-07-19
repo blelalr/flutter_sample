@@ -16,7 +16,7 @@ class SortFrame extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgPicture.asset('assets/icon/icon_colse.svg',
+            SvgPicture.asset('assets/icon/icon_close.svg',
                 color: Theme.of(context).hintColor, width: 24, height: 24),
             SizedBox(width: 4),
             Flexible(

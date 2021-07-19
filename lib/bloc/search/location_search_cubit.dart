@@ -11,8 +11,12 @@ class LocationSearchCubit extends Cubit<LocationSearchState> {
   void searchQuery(String query) async {
     emit(LocationSearching());
     try {
-      var response = await ApiService.getSearchRepo(query, 0);
-      emit(LocationSearched(response.repos));
+      var response = await ApiService.getSearchRepo(query, 1);
+      emit(LocationSearched(
+          locationList: response.repos,
+          isReachMax: response.repos.isEmpty || (response.repos.length == 0),
+          query: query,
+          page: 1));
     } catch (e) {
       emit(LocationSearchFail(locationError: e.toString()));
     }
