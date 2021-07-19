@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_sample/api/api_manager.dart';
 import 'package:flutter_sample/api/api_const.dart';
 import 'package:flutter_sample/model/photo.dart';
@@ -36,6 +38,8 @@ class ApiService {
           'page': '$page',
           'per_page': '10'
         });
+    // return Future.delayed(
+    //     Duration(seconds: 10), () => UserData.fromJson(response));
     return UserData.fromJson(response);
   }
 

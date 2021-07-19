@@ -8,14 +8,17 @@ enum DioMethod {
 }
 
 class ApiManager {
-  Dio _dio = Dio();
   static final ApiManager _apiServiceManager = ApiManager._internal();
+  Dio _dio = Dio();
 
   factory ApiManager() {
     BaseOptions options = BaseOptions(
         connectTimeout: 15 * 1000, // 15 seconds
         receiveTimeout: 15 * 1000, // 60 seconds
-        headers: {'User-Agent': 'request'});
+        headers: {
+          'User-Agent': 'request',
+          'Authorization': 'token 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'
+        });
     _apiServiceManager._dio = Dio(options);
     _apiServiceManager._dio.interceptors.add(LogInterceptor(
       requestHeader: false,
